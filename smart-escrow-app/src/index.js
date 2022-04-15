@@ -1,18 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { render } from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 
 import App from './components/App/App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const root = document.getElementById('root');
+render(
   <React.StrictMode>
     <BrowserRouter>
       <div className='div_body'>
         <App />
       </div>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
+  root
 );
