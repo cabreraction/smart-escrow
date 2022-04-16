@@ -1,13 +1,51 @@
+import { useState } from 'react'
 import Alert from 'react-bootstrap/Alert'
+
 import Main from '../Main/Main'
+import InputOutput from '../Input-Output/InputOutput';
 
 function EscrowGenerator() {
+  const [ description, setDescription ] = useState("");
+  const [ expirationDate, setExpirationDate ] = useState("");
+  const [ expirationTime, setExpirationTime ] = useState("");
+  const [ examplesArray, setExamplesArray ] = useState([]);
+
+  const handleOnChange = (evt) => {
+    const name = evt.target.name;
+    const value = evt.target.value;
+    
+    switch(name) {
+      case 'escrowDescription':
+        setDescription(value);
+        break;
+      case 'escrowExpirationDate':
+        setExpirationDate(value);
+        break;
+      case 'escrowExpirationTime':
+        setExpirationTime(value);
+        break;
+    }
+  }
+
+  const addExample = () => {
+    const local = [...examplesArray]
+    local.push({
+      id: local.length,
+      input: '',
+      output: ''
+    })
+
+    setExamplesArray(local)
+
+    console.log(examplesArray)
+  }
+
   return (
     <Main>
       <div className='d-flex flex-column mx-2'>
         <h1>Fideicomiso Nuevo</h1>
-        <div className='d-flex flex-column'>
-          <Alert variant='info' className='mt-3'>
+        <div className='d-flex flex-column mb-4'>
+          <Alert variant='info' className='mb-4'>
             <Alert.Heading>
               C&oacute;mo Crear un Fideicomiso Nuevo
             </Alert.Heading>
@@ -19,24 +57,25 @@ function EscrowGenerator() {
                   Por favor proveea todas las condiciones necesarias para el desarrollo satisfactorio de la aplicaci&oacute;n
                 </li>
                 <li>
-                  Expiraci&oacute;n: Una fecha y hora en la que el contrato dejar&aacute; de ser v&aacute;lido, o bien,
-                  una cantidad limitada de d&iacute;as para completar la tarea antes de que el contrato 
-                  pierda validez.
+                  Expiraci&oacute;n: Una fecha y hora en la que el contrato dejar&aacute; de ser v&aacute;lido.
                 </li>
                 <li>
                   Entradas y Salidas: Por favor provea entradas con sus respectivos resultados esperados.
-                  Debe proveer al menos cuatro entradas diferentes, pero pueden ser m&aacutes;. El desarrollador 
+                  Debe proveer al menos cuatro entradas diferentes, pero pueden ser m&aacute;s. El desarrollador 
                   podr&aacute; ver solo dos de estas entradas.
                 </li>
               </ul>
             </p>
           </Alert>
+          <h2>Datos Generales</h2>
           <div className="mb-3">
             <label>Descripci&oacute;n del Contrato</label>
             <textarea 
               className="form-control" 
               name="escrowDescription" 
               rows={10}
+              value={description}
+              onChange={handleOnChange}
             />
           </div>
           <div className="mb-3">
@@ -45,24 +84,34 @@ function EscrowGenerator() {
               className="form-control" 
               name="escrowExpirationDate" 
               type='date'
+              value={expirationDate}
+              onChange={handleOnChange}
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-4">
             <label>Hora de Expiraci&oacute;n</label>
             <input
               className="form-control" 
               name="escrowExpirationTime" 
               type='time'
+              value={expirationTime}
+              onChange={handleOnChange}
             />
           </div>
-          <div className="mb-3">
-            <label>Dias para Trabajar</label>
-            <input
-              className="form-control" 
-              name="escrowExpirationDays" 
-              type='number'
-            />
+          <div className='d-flex justify-content-between mb-3 align-items-end'>
+            <h2>Entradas y Salidas</h2>
+            <button 
+              className='btn btn-outline-secondary'
+              onClick={addExample}
+            >
+              Agregar+
+            </button>
           </div>
+          {
+              examplesArray.map(example => (
+                <InputOutput />
+              ))
+          }
         </div>
       </div>
     </Main>
