@@ -29,15 +29,31 @@ function EscrowGenerator() {
 
   const addExample = () => {
     const local = [...examplesArray]
-    local.push({
-      id: local.length,
-      input: '',
-      output: ''
-    })
+    const limit = local.length === 0 ? 4 : 1;
+    for (let i = 0; i < limit; i++) {
+      local.push({
+        id: limit === 4 ? i : local.length,
+        input: '',
+        output: ''
+      })
+    }
 
     setExamplesArray(local)
+  }
 
-    console.log(examplesArray)
+  const handleInputOutputChange = (value, index, type) => {
+    const modified = examplesArray.map((example, i) => {
+      if (i === index) {
+        if (type === 'output') {
+          example.output = value;
+        } else {
+          example.input = value;
+        }
+      }
+      return example;
+    })
+
+    setExamplesArray(modified);
   }
 
   return (
@@ -98,7 +114,7 @@ function EscrowGenerator() {
               onChange={handleOnChange}
             />
           </div>
-          <div className='d-flex justify-content-between mb-3 align-items-end'>
+          <div className='d-flex justify-content-between align-items-end'>
             <h2>Entradas y Salidas</h2>
             <button 
               className='btn btn-outline-secondary'
@@ -108,8 +124,15 @@ function EscrowGenerator() {
             </button>
           </div>
           {
-              examplesArray.map(example => (
-                <InputOutput />
+              examplesArray.map((example) => (
+                <InputOutput
+                  key={example.id}
+                  readOnly={false}
+                  index={example.id}
+                  input={example.input}
+                  output={example.output}
+                  onChange={handleInputOutputChange}
+                />
               ))
           }
         </div>
