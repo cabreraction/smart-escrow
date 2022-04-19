@@ -1,20 +1,32 @@
 import { useState } from 'react'
-import Alert from 'react-bootstrap/Alert'
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
+import Modal from 'react-bootstrap/Modal';
 
 import Main from '../Main/Main'
 import InputOutput from '../Input-Output/InputOutput';
+import { escrowGenerationGuide } from '../../content/content';
+import ProcessInfo from '../ProcessInfo/ProcessInfo'
 
 function EscrowGenerator() {
-  const [ description, setDescription ] = useState("");
-  const [ expirationDate, setExpirationDate ] = useState("");
-  const [ expirationTime, setExpirationTime ] = useState("");
+  const [ name, setName ] = useState('');
+  const [ description, setDescription ] = useState('');
+  const [ expirationDate, setExpirationDate ] = useState('');
+  const [ expirationTime, setExpirationTime ] = useState('');
   const [ examplesArray, setExamplesArray ] = useState([]);
+  const [ show, setShow ] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleOnChange = (evt) => {
     const name = evt.target.name;
     const value = evt.target.value;
     
     switch(name) {
+      case 'escrowName':
+        setName(value);
+        break;
       case 'escrowDescription':
         setDescription(value);
         break;
@@ -24,6 +36,8 @@ function EscrowGenerator() {
       case 'escrowExpirationTime':
         setExpirationTime(value);
         break;
+      default:
+        return;
     }
   }
 
@@ -59,31 +73,38 @@ function EscrowGenerator() {
   return (
     <Main>
       <div className='d-flex flex-column mx-2'>
+        <Modal 
+          show={show} 
+          onHide={handleClose} 
+          backdrop="static"
+          keyboard={false} 
+        >
+          <Modal.Header >
+            <Modal.Title>El Fideicomiso Ha Sido Creado</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Felicidades! Tu fideicomiso ha sido creado, el codigo del mismo es: Hyo987Ad</Modal.Body>
+          <Modal.Footer>
+            <button className='btn btn-outline-danger' onClick={handleClose}>
+              Ir a la pantalla principal
+            </button>
+          </Modal.Footer>
+        </Modal>
         <h1>Fideicomiso Nuevo</h1>
         <div className='d-flex flex-column mb-4'>
-          <Alert variant='info' className='mb-4'>
-            <Alert.Heading>
-              C&oacute;mo Crear un Fideicomiso Nuevo
-            </Alert.Heading>
-            <p>
-              Para poder crear un nuevo contrato por favor introduzca la siguiente informaci&oacute;n:
-              <ul>
-                <li>
-                  Descripci&oacute;n: Una explicaci&oacute;n clara de lo que se espera que la aplicaci&oacute;n resuelva.
-                  Por favor proveea todas las condiciones necesarias para el desarrollo satisfactorio de la aplicaci&oacute;n
-                </li>
-                <li>
-                  Expiraci&oacute;n: Una fecha y hora en la que el contrato dejar&aacute; de ser v&aacute;lido.
-                </li>
-                <li>
-                  Entradas y Salidas: Por favor provea entradas con sus respectivos resultados esperados.
-                  Debe proveer al menos cuatro entradas diferentes, pero pueden ser m&aacute;s. El desarrollador 
-                  podr&aacute; ver solo dos de estas entradas.
-                </li>
-              </ul>
-            </p>
-          </Alert>
+          <ProcessInfo 
+            { ...escrowGenerationGuide } 
+          />
           <h2>Datos Generales</h2>
+          <div className='mb-3'>
+            <label>Nombre del Contrato</label>
+            <input 
+              className='form-control'
+              type='text'
+              name="escrowName"
+              value={name}
+              onChange={handleOnChange}
+            />
+          </div>
           <div className="mb-3">
             <label>Descripci&oacute;n del Contrato</label>
             <textarea 
@@ -124,17 +145,31 @@ function EscrowGenerator() {
             </button>
           </div>
           {
-              examplesArray.map((example) => (
-                <InputOutput
-                  key={example.id}
-                  readOnly={false}
-                  index={example.id}
-                  input={example.input}
-                  output={example.output}
-                  onChange={handleInputOutputChange}
-                />
-              ))
+            examplesArray.length ?
+            <Tabs>
+              {
+                examplesArray.map((example) => (
+                  <Tab eventKey={example.id} title={`Prueba ${example.id + 1}`} key={example.id}>
+                    <InputOutput
+                      readOnly={false}
+                      index={example.id}
+                      input={example.input}
+                      output={example.output}
+                      onChange={handleInputOutputChange}
+                    />
+                  </Tab>
+                ))
+              }
+            </Tabs> : null
           }
+          <div className='d-flex justify-content-start'>
+            <button 
+              className='btn btn-primary'
+              onClick={handleShow}
+            >
+              Crear Fideicomiso
+            </button>
+          </div>
         </div>
       </div>
     </Main>
