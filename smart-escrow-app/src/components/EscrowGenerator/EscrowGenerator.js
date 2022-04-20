@@ -162,13 +162,27 @@ function EscrowGenerator() {
               }
             </Tabs> : null
           }
-          <div className='d-flex justify-content-start'>
-            <button 
-              className='btn btn-primary'
-              onClick={handleShow}
-            >
-              Crear Fideicomiso
-            </button>
+          <div className='d-flex justify-content-between align-items-center'>
+            <div className="my-4">
+              <label>Precio</label>
+              <input
+                className="form-control" 
+                name="escrowExpirationTime" 
+                type='number'
+                min={1}
+                step='any'
+                value={expirationTime}
+                onChange={handleOnChange}
+              />
+            </div>
+            <div>
+              <button 
+                className='btn btn-primary'
+                onClick={handleShow}
+              >
+                Crear Fideicomiso
+              </button>
+            </div>
           </div>
         </div>
       </div>
