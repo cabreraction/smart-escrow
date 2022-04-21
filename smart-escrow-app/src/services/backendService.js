@@ -65,3 +65,41 @@ export function getEscrows() {
     },
   ]
 }
+
+export function getEscrow(escrowId, userAsking) {
+  return {
+    id: 1,
+    name: 'Example Active Contract 1',
+    description: 'This is the description of the contract',
+    expiration_date: '21/04/2022',
+    expiration_time: '',
+    price: 100,
+    state: 'active',
+    examples: [
+      {
+        input: '',
+        output: '',
+        route: '',
+        method: ''
+      },
+      {
+        input: '',
+        output: '',
+        route: '',
+        method: ''
+      },
+      {
+        input: '',
+        output: '',
+        route: '',
+        method: ''
+      },
+      {
+        input: '',
+        output: '',
+        route: '',
+        method: ''
+      }
+    ]
+  }
+}

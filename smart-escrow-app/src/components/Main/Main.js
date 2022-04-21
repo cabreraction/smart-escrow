@@ -20,6 +20,9 @@ function Main({ children }) {
               <li className="nav-item">
                 <a className="nav-link" href="#">Generador</a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">Encontrar</a>
+              </li>
             </ul>
           </div>
         </div>

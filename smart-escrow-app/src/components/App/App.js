@@ -3,6 +3,7 @@ import Signup from '../Signup/Signup';
 import Login from '../Login/Login';
 import EscrowGenerator from '../EscrowGenerator/EscrowGenerator';
 import EscrowsHistory from '../EscrowsHistory/EscrowsHistory';
+import UniqueEscrowView from '../UniqueEscrowView/UniqueEscrowView';
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
       <Route 
         path='escrows-history' 
         element={ <EscrowsHistory /> } 
+      />
+      <Route
+        path='escrow/:id'
+        element={ <UniqueEscrowView />}
       />
     </Routes>
   );

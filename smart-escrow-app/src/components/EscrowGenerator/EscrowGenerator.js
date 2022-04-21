@@ -48,7 +48,9 @@ function EscrowGenerator() {
       local.push({
         id: limit === 4 ? i : local.length,
         input: '',
-        output: ''
+        output: '',
+        route: '',
+        method: ''
       })
     }
 
