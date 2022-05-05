@@ -20,6 +20,4 @@ const input = {
 };
 
 const output = JSON.parse(solc.compile(JSON.stringify(input)));
-fs.writeFileSync('CompiledSmartEscrow.json', JSON.stringify(output))
-// console.log(output);
-// const bytecode = output.contracts['SmartEscrow.sol']['SmartEscrow'].evm.bytecode.object;
+fs.writeFileSync('CompiledSmartEscrow.json', JSON.stringify(output));
