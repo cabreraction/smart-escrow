@@ -12,11 +12,12 @@ const ownerAddress = process.env.OWNER_ADDRESS;
 const privateKey = process.env.PRIVATE_KEY;
 
 const SmartEscrow = new web3.eth.Contract(abi);
-/*const firstTransaction = SmartEscrow.deploy({ data: bytecode });
+const firstTransaction = SmartEscrow.deploy({ data: bytecode });
 firstTransaction.send({
     from: ownerAddress,
     chainId: chainId,
-    gasPrice: web3.eth.gasPrice
-}); */
+    gas: 1500000,
+    gasPrice: '30000000000000'
+});
 
-web3.eth.getGasPrice().then(res => console.log(res))
+// web3.eth.getGasPrice().then(res => console.log(res))

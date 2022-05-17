@@ -19,7 +19,7 @@ contract SmartEscrow {
     struct Escrow {
         address funder;
         address receiver;
-        uint256 amount; // in dollars
+        uint256 amount; // in eth
         bool released;
         uint256 code;
     }
@@ -57,5 +57,4 @@ contract SmartEscrow {
 
         escrows[index].released = true;
     }
-
 }
