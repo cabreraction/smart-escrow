@@ -9,8 +9,6 @@ export async function signup(email, userType, walletAddress, password) {
         password
     }
 
-    console.log(requestData)
-
     const response = await axios.post(url, requestData);
     return response.status;
 }

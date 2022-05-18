@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-import { mockSignup, signup } from '../../services/signupService';
+import { signup } from '../../services/signupService';
 
 function Signup() {
   const [ email, setEmail ] = useState('');
@@ -52,9 +52,7 @@ function Signup() {
         alert('Su contraseña y confirmación deben ser iguales');
       }
 
-      // BACKEND
       const responseStatus = await signup(email, userType, walletAddress, password);
-      debugger;
       if (responseStatus === 200) {
         navigate('escrows-history')
       } else {
