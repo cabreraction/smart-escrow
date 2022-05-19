@@ -1,11 +1,8 @@
 import { useState } from 'react'
-import Tab from 'react-bootstrap/Tab'
-import Tabs from 'react-bootstrap/Tabs'
 import Modal from 'react-bootstrap/Modal';
 
 import Main from '../Main/Main'
-import InputOutput from '../Input-Output/InputOutput';
-import { escrowGenerationGuide } from '../../content/content';
+import { generalEscrowGenerationGuide } from '../../content/content';
 import ProcessInfo from '../ProcessInfo/ProcessInfo'
 
 function EscrowGenerator() {
@@ -13,11 +10,6 @@ function EscrowGenerator() {
   const [ description, setDescription ] = useState('');
   const [ expirationDate, setExpirationDate ] = useState('');
   const [ expirationTime, setExpirationTime ] = useState('');
-  const [ examplesArray, setExamplesArray ] = useState([]);
-  const [ show, setShow ] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const handleOnChange = (evt) => {
     const name = evt.target.name;
@@ -37,75 +29,68 @@ function EscrowGenerator() {
         setExpirationTime(value);
         break;
       default:
-        return;
+        break;
     }
   }
 
-  const addExample = () => {
-    const local = [...examplesArray]
-    const limit = local.length === 0 ? 4 : 1;
-    for (let i = 0; i < limit; i++) {
-      local.push({
-        id: limit === 4 ? i : local.length,
-        input: '',
-        output: '',
-        route: '',
-        method: ''
-      })
-    }
+  const createDraft = () => {};
 
-    setExamplesArray(local)
-  }
-
-  const handleInputOutputChange = (value, index, type) => {
-    const modified = examplesArray.map((example, i) => {
-      if (i === index) {
-        if (type === 'output') {
-          example.output = value;
-        } else {
-          example.input = value;
-        }
-      }
-      return example;
-    })
-
-    setExamplesArray(modified);
-  }
+  const discardDraft = () => {};
 
   return (
     <Main>
       <div className='d-flex flex-column mx-2'>
-        <Modal 
-          show={show} 
-          onHide={handleClose} 
-          backdrop="static"
-          keyboard={false} 
-        >
-          <Modal.Header >
-            <Modal.Title>El Fideicomiso Ha Sido Creado</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Felicidades! Tu fideicomiso ha sido creado, el codigo del mismo es: Hyo987Ad</Modal.Body>
-          <Modal.Footer>
-            <button className='btn btn-outline-danger' onClick={handleClose}>
-              Ir a la pantalla principal
-            </button>
-          </Modal.Footer>
-        </Modal>
-        <h1>Fideicomiso Nuevo</h1>
-        <div className='d-flex flex-column mb-4'>
+        <div className='container mb-4'>
+          <h1 className='mb-4'>Fideicomiso Nuevo</h1>
           <ProcessInfo 
-            { ...escrowGenerationGuide } 
+            { ...generalEscrowGenerationGuide } 
           />
           <h2>Datos Generales</h2>
-          <div className='mb-3'>
-            <label>Nombre del Contrato</label>
-            <input 
-              className='form-control'
-              type='text'
-              name="escrowName"
-              value={name}
-              onChange={handleOnChange}
+          <div className='row mb-3'>
+            <div className='col'>
+              <label>Nombre del Contrato</label>
+              <input 
+                className='form-control'
+                type='text'
+                name="escrowName"
+                value={name}
+                onChange={handleOnChange}
+              />
+            </div>
+            <div className='col'>
+              <label>Precio</label>
+                <input
+                  className="form-control" 
+                  name="escrowExpirationTime" 
+                  type='number'
+                  min={1}
+                  step='any'
+                  value={expirationTime}
+                  onChange={handleOnChange}
+                />
+            </div>
+          </div>
+          <div className='row mb-3'>
+            <div className='col'>
+              <label>Fecha de Expiraci&oacute;n</label>
+              <input
+                className="form-control" 
+                name="escrowExpirationDate" 
+                type='date'
+                value={expirationDate}
+                onChange={handleOnChange}
+              />
+            </div>
+            <div className='col'>
+              <label>Hora de Expiraci&oacute;n</label>
+              <input
+                className="form-control" 
+                name="escrowExpirationTime" 
+                type='time'
+                value={expirationTime}
+                onChange={handleOnChange}
             />
+            </div>
           </div>
           <div className="mb-3">
             <label>Descripci&oacute;n del Contrato</label>
@@ -117,74 +102,19 @@ function EscrowGenerator() {
               onChange={handleOnChange}
             />
           </div>
-          <div className="mb-3">
-            <label>Fecha de Expiraci&oacute;n</label>
-            <input
-              className="form-control" 
-              name="escrowExpirationDate" 
-              type='date'
-              value={expirationDate}
-              onChange={handleOnChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label>Hora de Expiraci&oacute;n</label>
-            <input
-              className="form-control" 
-              name="escrowExpirationTime" 
-              type='time'
-              value={expirationTime}
-              onChange={handleOnChange}
-            />
-          </div>
-          <div className='d-flex justify-content-between align-items-end'>
-            <h2>Entradas y Salidas</h2>
+          <div className='d-flex align-items-center justify-content-center'>
             <button 
-              className='btn btn-outline-secondary'
-              onClick={addExample}
+              className='btn btn-outline-danger mx-2'
+              onClick={discardDraft}
             >
-              Agregar+
+              Cancelar
             </button>
-          </div>
-          {
-            examplesArray.length ?
-            <Tabs>
-              {
-                examplesArray.map((example) => (
-                  <Tab eventKey={example.id} title={`Prueba ${example.id + 1}`} key={example.id}>
-                    <InputOutput
-                      readOnly={false}
-                      index={example.id}
-                      input={example.input}
-                      output={example.output}
-                      onChange={handleInputOutputChange}
-                    />
-                  </Tab>
-                ))
-              }
-            </Tabs> : null
-          }
-          <div className='d-flex justify-content-between align-items-center'>
-            <div className="my-4">
-              <label>Precio</label>
-              <input
-                className="form-control" 
-                name="escrowExpirationTime" 
-                type='number'
-                min={1}
-                step='any'
-                value={expirationTime}
-                onChange={handleOnChange}
-              />
-            </div>
-            <div>
-              <button 
-                className='btn btn-primary'
-                onClick={handleShow}
-              >
-                Crear Fideicomiso
-              </button>
-            </div>
+            <button 
+              className='btn btn-outline-primary mx-2'
+              onClick={createDraft}
+            >
+              Siguiente
+            </button>
           </div>
         </div>
       </div>
