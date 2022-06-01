@@ -1,15 +1,21 @@
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from 'react-router-dom';
 
 import Main from '../Main/Main'
 import { generalEscrowGenerationGuide } from '../../content/content';
 import ProcessInfo from '../ProcessInfo/ProcessInfo'
+import { errorAlert } from '../../services/alertService';
+import { validateTextInput, validatePriceInput } from '../../utils/utils';
 
 function EscrowGenerator() {
   const [ name, setName ] = useState('');
   const [ description, setDescription ] = useState('');
   const [ expirationDate, setExpirationDate ] = useState('');
   const [ expirationTime, setExpirationTime ] = useState('');
+  const [ escrowPrice, setEscrowPrice ] = useState(0);
+
+  const navigate = useNavigate();
 
   const handleOnChange = (evt) => {
     const name = evt.target.name;
@@ -28,14 +34,43 @@ function EscrowGenerator() {
       case 'escrowExpirationTime':
         setExpirationTime(value);
         break;
+      case 'escrowPrice':
+        setEscrowPrice(value);
+        break;
       default:
         break;
     }
   }
 
-  const createDraft = () => {};
+  const createDraft = () => {
+    const inputFields = [ 
+      { value: name, type: 'escrowName' },
+      { value: expirationDate, type: 'expirationDate' },
+      { value: expirationTime, type: 'expirationTime' },
+      { value: escrowPrice, type: 'escrowPrice' }
+    ];
+    
+    for (let field of inputFields) {
+      const { status, errorMessage } = validateTextInput(field.value, field.type);
+      if (status !== 'ok') {
+        errorAlert(errorMessage);
+        return;
+      }
+    }
 
-  const discardDraft = () => {};
+    const {status, errorMessage } = validatePriceInput(escrowPrice);
+    if (status !== 'ok') {
+      errorAlert(errorMessage);
+      return;
+    }
+
+    // send the information
+    // navigate to the next page
+  };
+
+  const discardDraft = () => {
+    navigate('../escrows-history');
+  };
 
   return (
     <Main>
@@ -61,11 +96,11 @@ function EscrowGenerator() {
               <label>Precio</label>
                 <input
                   className="form-control" 
-                  name="escrowExpirationTime" 
+                  name="escrowPrice" 
                   type='number'
                   min={1}
                   step='any'
-                  value={expirationTime}
+                  value={escrowPrice}
                   onChange={handleOnChange}
                 />
             </div>

@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '../../services/loginService';
+import { errorAlert } from '../../services/alertService';
+import { validateTextInput } from '../../utils/utils';
 
 function Login() {
   const [ email, setEmail ] = useState('')
@@ -24,14 +26,16 @@ function Login() {
   }
 
   const handleOnClick = async () => {
-  if (!email) {
-    alert('Por favor introduzca una dirección de correo electrónico');
-  }
-  else if (!password) {
-    alert('Por favor indique su contraseña');
-  }
+    const inputFields = [ { value: email, type: 'email' }, { value: password, type: 'password' } ];
+    for (let field of inputFields) {
+      const { status, errorMessage } = validateTextInput(field.value, field.type);
+      if (status !== 'ok') {
+        errorAlert(errorMessage);
+        return;
+      }
+    }
 
-  const response = await login(email, password);
+    const response = await login(email, password);
     if (response.status === 200) {
       // store user in localStorage
       localStorage.setItem('user', JSON.stringify(response.user));

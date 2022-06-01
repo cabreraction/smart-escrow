@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { signup } from '../../services/signupService';
+import { errorAlert } from '../../services/alertService';
+import { validateTextInput, validatePasswordAndConfirmationMatch } from '../../utils/utils';
 
 function Signup() {
   const [ email, setEmail ] = useState('');
@@ -13,51 +15,56 @@ function Signup() {
   const navigate = useNavigate();
 
   const handleOnChange = (e) => {
-      const name = e.target.name;
-      const value = e.target.value;
+    const name = e.target.name;
+    const value = e.target.value;
 
-      switch(name) {
-        case 'signupEmailInput':
-          setEmail(value);
-          break;
-        case 'signupUserTypeInput':
-          setUserType(value);
-          break;
-        case 'signupPasswordInput':
-          setPassword(value);
-          break;
-        case 'signupPasswordConfInput':
-          setPasswordConfirmation(value);
-          break;
-        case 'signupWalletAddressInput':
-          setWalletAddress(value);
-          break;
-      }
+    switch(name) {
+      case 'signupEmailInput':
+        setEmail(value);
+        break;
+      case 'signupUserTypeInput':
+        setUserType(value);
+        break;
+      case 'signupPasswordInput':
+        setPassword(value);
+        break;
+      case 'signupPasswordConfInput':
+        setPasswordConfirmation(value);
+        break;
+      case 'signupWalletAddressInput':
+        setWalletAddress(value);
+        break;
+    }
   }
 
   const handleOnClick = async () => {
-      if (!email) {
-        alert('Por favor introduzca una dirección de correo electrónico');
+    const inputFields = [ 
+      { value: email, type: 'email' },
+      { value: password, type: 'password' },
+      { value: passwordConfirmation, type: 'passwordConfirmation' },
+      { value: walletAddress, type: 'walletAddress' }
+    ];
+    
+    for (let field of inputFields) {
+      const { status, errorMessage } = validateTextInput(field.value, field.type);
+      if (status !== 'ok') {
+        errorAlert(errorMessage);
+        return;
       }
-      else if (!password) {
-        alert('Por favor indique su contraseña');
-      }
-      else if (!passwordConfirmation) {
-        alert('Por favor indique la confirmación de su contraseña');
-      }
-      else if (!walletAddress) {
-        alert('Por favor introduzca una dirección de billetera electrónica válida');
-      }
-      else if (password !== passwordConfirmation) {
-        alert('Su contraseña y confirmación deben ser iguales');
-      }
+    }
+    
+    const { status, errorMessage } = validatePasswordAndConfirmationMatch(password, passwordConfirmation);
+    if (status !== 'ok') {
+      errorAlert(errorMessage);
+      return;
+    }
 
-      const responseStatus = await signup(email, userType, walletAddress, password);
-      if (responseStatus === 200) {
-        navigate('escrows-history')
-      } else {
-        alert('Algo ha salido mal, por favor intenta de nuevo');
-      }
+    const responseStatus = await signup(email, userType, walletAddress, password);
+    if (responseStatus === 200) {
+      navigate('escrows-history')
+    } else {
+      alert('Algo ha salido mal, por favor intenta de nuevo');
+    }
   }
 
   return (
