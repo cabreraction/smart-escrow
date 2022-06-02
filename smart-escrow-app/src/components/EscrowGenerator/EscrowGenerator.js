@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Modal from 'react-bootstrap/Modal';
+// import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 
 import Main from '../Main/Main'
@@ -7,6 +7,7 @@ import { generalEscrowGenerationGuide } from '../../content/content';
 import ProcessInfo from '../ProcessInfo/ProcessInfo'
 import { errorAlert } from '../../services/alertService';
 import { validateTextInput, validatePriceInput } from '../../utils/utils';
+import { createEscrow } from '../../services/escrowService';
 
 function EscrowGenerator() {
   const [ name, setName ] = useState('');
@@ -42,7 +43,7 @@ function EscrowGenerator() {
     }
   }
 
-  const createDraft = () => {
+  const createDraft = async () => {
     const inputFields = [ 
       { value: name, type: 'escrowName' },
       { value: expirationDate, type: 'expirationDate' },
@@ -64,8 +65,14 @@ function EscrowGenerator() {
       return;
     }
 
-    // send the information
-    // navigate to the next page
+    const response = await createEscrow(name, description, escrowPrice, expirationDate, expirationTime);
+    if (response.status === 200) {
+      // const escrowId = response.escrowId; --> this needs to be send to the next page as a parameter
+      // navigate('escrows-history')
+      console.log('im navigating to the next thing')
+    } else {
+      errorAlert('Algo ha salido mal, por favor intenta de nuevo');
+    }
   };
 
   const discardDraft = () => {
@@ -93,7 +100,7 @@ function EscrowGenerator() {
               />
             </div>
             <div className='col'>
-              <label>Precio</label>
+              <label>Precio - USD</label>
                 <input
                   className="form-control" 
                   name="escrowPrice" 
@@ -128,7 +135,7 @@ function EscrowGenerator() {
             </div>
           </div>
           <div className="mb-3">
-            <label>Descripci&oacute;n del Contrato</label>
+            <label>Descripci&oacute;n del Contrato<small>      (Opcional)</small></label>
             <textarea 
               className="form-control" 
               name="escrowDescription" 

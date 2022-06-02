@@ -63,7 +63,7 @@ function Signup() {
     if (responseStatus === 200) {
       navigate('escrows-history')
     } else {
-      alert('Algo ha salido mal, por favor intenta de nuevo');
+      errorAlert('Algo ha salido mal, por favor intenta de nuevo');
     }
   }
 

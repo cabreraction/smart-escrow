@@ -41,7 +41,7 @@ function Login() {
       localStorage.setItem('user', JSON.stringify(response.user));
       navigate('../escrows-history');
     } else {
-      alert('Algo ha salido mal, por favor intenta de nuevo');
+      errorAlert('Algo ha salido mal, por favor intenta de nuevo');
     }
   }
 
