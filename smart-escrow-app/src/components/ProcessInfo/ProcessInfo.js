@@ -10,8 +10,8 @@ function ProcessInfo({ title, summary, steps }) {
           {summary}
           <ul>
             {
-              steps && steps.map(step => (
-                  <li>{step}</li>
+              steps && steps.map((step, index) => (
+                  <li key={index}>{step}</li>
               ))
             }
           </ul>

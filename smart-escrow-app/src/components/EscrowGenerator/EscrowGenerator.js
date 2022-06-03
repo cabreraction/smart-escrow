@@ -71,7 +71,8 @@ function EscrowGenerator() {
       // navigate('escrows-history')
       console.log('im navigating to the next thing')
     } else {
-      errorAlert('Algo ha salido mal, por favor intenta de nuevo');
+      // errorAlert('Algo ha salido mal, por favor intenta de nuevo');
+      navigate(`../details/${response.escrowId}`);
     }
   };
 
