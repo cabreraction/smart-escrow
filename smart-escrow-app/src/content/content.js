@@ -10,12 +10,14 @@ export const generalEscrowGenerationGuide = {
   ]
 }
 
-export const inputOutputEscrowGenerationGuide = {
-  title: 'Fideicomiso: Entradas y Salidas',
-  summary: 'Para que la evaluación del producto pueda ser automatizada por favor llene la siguiente informaciónÑ',
+export const escrowDetailsGenerationGuide = {
+  title: 'Fideicomiso: Detalles',
+  summary: 'Para que la evaluación del producto pueda ser automatizada por favor llene la siguiente información',
   steps: [
-    `Entradas y Salidas: Por favor provea entradas con sus respectivos resultados esperados.
-    Debe proveer al menos cuatro entradas diferentes, pero pueden ser más. El desarrollador 
-    podrá ver solo dos de estas entradas, el resto se utilizarán para validar que la aplicación funcione correctamente.`,
+    `Endpoint: Esta es la dirección del controlador en el servicio web.`,
+    `Operación: El tipo de operación RESTful que se realiza en el endpoint proveido. En este momento solamente cuatro operaciones son soportadas: GET, POST, PUT y DELETE.`,
+    `Tipo de Respuesta: Si la respuesta es un array o un objeto.`,
+    `Atributos de la Respuesta: Un atributo es compuesto por un nombre y un tipo de dato. Si la respuesta es un array entonces son los atributos que cada elemento 
+      del array puede tener, si la respuesta es un objeto entonces son los atributos que ese objeto debe tener al ser recibido.`
   ]
 };

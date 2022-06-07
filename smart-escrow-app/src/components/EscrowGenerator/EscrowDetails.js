@@ -4,6 +4,8 @@ import Tabs from 'react-bootstrap/Tabs'
 
 import Main from '../Main/Main'
 import EscrowRoute from './EscrowRoute';
+import ProcessInfo from '../ProcessInfo/ProcessInfo'
+import { escrowDetailsGenerationGuide } from '../../content/content';
 
 function EscrowDetails() {
   const { id: escrowId } = useParams();
@@ -13,6 +15,9 @@ function EscrowDetails() {
       <div className='d-flex flex-column mx-2'>
         <div className='container mb-4'>
           <h1 className='mb-4'>Detalles del Fideicomiso</h1>
+          <ProcessInfo 
+            { ...escrowDetailsGenerationGuide } 
+          />
           <Tabs>
             <Tab eventKey={1} title={`Prueba 1`} key={1}>
               <EscrowRoute />
