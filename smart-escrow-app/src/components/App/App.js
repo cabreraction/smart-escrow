@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import Signup from '../Signup/Signup';
 import Login from '../Login/Login';
-import EscrowGenerator from '../EscrowGenerator/EscrowGenerator';
-import EscrowDetails from '../EscrowGenerator/EscrowDetails';
+import EscrowGenerator from '../EscrowGenerator/Draft/EscrowGenerator';
+import EscrowDetails from '../EscrowGenerator/Details/EscrowDetails';
 import EscrowsHistory from '../EscrowsHistory/EscrowsHistory';
 import UniqueEscrowView from '../UniqueEscrowView/UniqueEscrowView';
 

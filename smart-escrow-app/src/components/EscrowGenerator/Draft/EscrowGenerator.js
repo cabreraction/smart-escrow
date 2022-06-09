@@ -2,12 +2,12 @@ import { useState } from 'react'
 // import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from 'react-router-dom';
 
-import Main from '../Main/Main'
-import { generalEscrowGenerationGuide } from '../../content/content';
-import ProcessInfo from '../ProcessInfo/ProcessInfo'
-import { errorAlert } from '../../services/alertService';
-import { validateTextInput, validatePriceInput } from '../../utils/utils';
-import { createEscrow } from '../../services/escrowService';
+import Main from '../../Main/Main'
+import { generalEscrowGenerationGuide } from '../../../content/content';
+import ProcessInfo from '../../ProcessInfo/ProcessInfo'
+import { errorAlert } from '../../../services/alertService';
+import { validateTextInput, validatePriceInput } from '../../../utils/utils';
+import { createEscrow } from '../../../services/escrowService';
 
 function EscrowGenerator() {
   const [ name, setName ] = useState('');
