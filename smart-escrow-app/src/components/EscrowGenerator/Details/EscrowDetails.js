@@ -14,11 +14,10 @@ function EscrowDetails() {
 
   const addNewEndpoint = () => {
     setEndpointTabs(prev => { 
-      prev.push({})
-      return prev; 
+      const newTabs = [ ...prev ];
+      newTabs.push({});
+      return newTabs; 
     })
-
-    console.log(endpointTabs)
   }
 
   const createTabs = () => {
