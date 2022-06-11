@@ -1,54 +1,16 @@
-import { useState } from 'react';
+import RouteAttribute from './RouteAttribute';
 
-function EscrowRoute({ index }) {
-  const [ responseAttributesCount, setResponseAttributesCount ] = useState(0);
+function EscrowRoute({ 
+  routeIndex,
+  handleRouteOnChange, 
+  fields, 
+  addAttributeToRoute, 
+  deleteAttributeFromRoute 
+}) {
+  const { endpointRoute, operation, responseType, attributes } = fields;
 
-  const addResponseAttribute = () => {
-    setResponseAttributesCount(prev => prev + 1);
-  }
-
-  const renderAttributes = () => {
-    const attributes = [];
-    for (let i = 0; i < responseAttributesCount; i++) {
-      const attributeView = (
-        <div className='row mb-4'>
-          <div className='col-sm-5'>
-            <label className='mx-1 mb-1'>Nombre del Atributo</label>
-            <input 
-              type='text' 
-              className='form-control' 
-              onChange={null}
-            />
-          </div>
-          <div className='col-sm-5'>
-            <label className='mx-1 mb-1'>Tipo de Dato</label>
-            <select 
-              className='form-select' 
-              onChange={null}
-            >
-              <option value='string'>String</option>
-              <option value='number'>Number</option>
-              <option value='boolean'>Boolean</option>
-              <option value='array'>Array</option>
-              <option value='object'>Object</option>
-            </select>
-          </div>
-          <div className='col-sm h-100'>
-            <label class="mx-1 mb-1">Datos Null</label>
-            <select 
-              className='form-select' 
-              onChange={null}
-            >
-              <option value='si'>Puede Contener</option>
-              <option value='no'>No Contiene</option>
-            </select>
-          </div>
-        </div>
-      );
-      attributes.push(attributeView);
-    }
-
-    return attributes;
+  const deleteAttribute = (attributeIndex) => {
+    deleteAttributeFromRoute(routeIndex, attributeIndex);
   }
 
   return (
@@ -60,14 +22,16 @@ function EscrowRoute({ index }) {
             type='text' 
             className='form-control' 
             placeholder='/example/resources' 
-            onChange={null}
+            onChange={(evt) => handleRouteOnChange(evt, 'endpointRoute', routeIndex)}
+            value={endpointRoute}
           />
         </div>
         <div className='col-sm-4'>
           <label className='mx-1 mb-1'>Operaci&oacute;n</label>
           <select 
             className='form-select' 
-            onChange={null}
+            onChange={(evt) => handleRouteOnChange(evt, 'operation', routeIndex)}
+            value={operation}
           >
             <option value='get'>GET</option>
             <option value='post'>POST</option>
@@ -79,9 +43,10 @@ function EscrowRoute({ index }) {
           <label className='mx-1 mb-1'>Tipo de Respuesta</label>
           <select 
             className='form-select' 
-            onChange={null}
+            onChange={(evt) => handleRouteOnChange(evt, 'responseType', routeIndex)}
+            value={responseType}
           >
-            <option value='objeto'>Objeto</option>
+            <option value='object'>Objeto</option>
             <option value='array'>Array</option>
           </select>
         </div>
@@ -91,14 +56,25 @@ function EscrowRoute({ index }) {
           <h3>Atributos de la respuesta</h3>
           <button 
             className="btn btn-outline-secondary" 
-            onClick={addResponseAttribute}
+            onClick={() => addAttributeToRoute(routeIndex)}
           >
             Agregar Atributo +
           </button>
         </div>
       </div>
       <div className='row my-3'>
-        {renderAttributes()}
+        {
+          attributes.map((attribute, i) => (
+            <RouteAttribute 
+              key={i}
+              name={attribute.name}
+              type={attribute.type}
+              allowsNull={attribute.allowsNull}
+              attributeIndex={i}
+              deleteAttribute={deleteAttribute}
+            />
+          ))
+        }
       </div>
     </div>
   );
