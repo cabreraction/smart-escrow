@@ -1,4 +1,4 @@
-function RouteAttribute({ name, type, allowsNull, attributeIndex, deleteAttribute }) {
+function RouteAttribute({ name, type, allowsNull, attributeIndex, deleteAttribute, attributeChange }) {
   return (
     <div className='row mb-3'>
       <div className='col-sm-4'>
@@ -6,7 +6,7 @@ function RouteAttribute({ name, type, allowsNull, attributeIndex, deleteAttribut
         <input 
           type='text' 
           className='form-control' 
-          onChange={null}
+          onChange={(evt) => attributeChange(evt, 'name', attributeIndex)}
           value={name}
         />
       </div>
@@ -14,7 +14,7 @@ function RouteAttribute({ name, type, allowsNull, attributeIndex, deleteAttribut
         <label className='mx-1 mb-1'>Tipo de Dato</label>
         <select 
           className='form-select' 
-          onChange={null}
+          onChange={(evt) => attributeChange(evt, 'type', attributeIndex)}
           value={type}
         >
           <option value='string'>String</option>
@@ -28,11 +28,11 @@ function RouteAttribute({ name, type, allowsNull, attributeIndex, deleteAttribut
         <label className="mx-1 mb-1">Valores Null</label>
         <select 
           className='form-select' 
-          onChange={null}
+          onChange={(evt) => attributeChange(evt, 'allowsNull', attributeIndex)}
           value={allowsNull}
         >
-          <option value='si'>Permitidos</option>
-          <option value='no'>No Permitidos</option>
+          <option value='allowed'>Permitidos</option>
+          <option value='notAllowed'>No Permitidos</option>
         </select>
       </div>
       <div className="col-sm d-flex flex-column align-items-stretch justify-content-end">

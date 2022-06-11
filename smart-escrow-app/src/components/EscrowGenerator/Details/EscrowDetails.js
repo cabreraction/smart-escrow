@@ -36,7 +36,9 @@ function EscrowDetails() {
     const value = evt.target.value;
     setEndpointTabs(prev => {
       const newTabs = [ ...prev ];
-      newTabs[index][field] = value;
+      const tempRef = { ...newTabs[index] }
+      tempRef[field] = value;
+      newTabs[index] = tempRef;
 
       return newTabs;
     });
@@ -45,11 +47,15 @@ function EscrowDetails() {
   const addAttributeToRoute = (index) => {
     setEndpointTabs(prev => {
       const newTabs = [ ...prev ];
-      newTabs[index].attributes.push({
+      const endpointTempRef = { ...newTabs[index] };
+      const attributesRef = [ ...endpointTempRef.attributes ];
+      attributesRef.push({
         name: '',
         type: 'string',
-        allowsNull: false
+        allowsNull: 'notAllowed'
       });
+      endpointTempRef.attributes = attributesRef;
+      newTabs[index] = endpointTempRef;
 
       return newTabs;
     })
@@ -58,12 +64,28 @@ function EscrowDetails() {
   const deleteAttributeFromRoute = (routeIndex, attributeIndex) => {
     setEndpointTabs(prev => {
       const newTabs = [ ...prev ];
-      const endpointAttributes = [ ...newTabs[routeIndex].attributes ];
+      const endpointRef = { ...newTabs[routeIndex] };
+      const endpointAttributes = [ ...endpointRef.attributes ];
       endpointAttributes.splice(attributeIndex, 1);
-      newTabs[routeIndex].attributes = endpointAttributes;
+      endpointRef.attributes = endpointAttributes;
+      newTabs[routeIndex] = endpointRef;
       
       return newTabs;
     });
+  }
+
+  const handleAttributeOnChange = (evt, field, attributeIndex, routeIndex) => {
+    const value = evt.target.value;
+    setEndpointTabs(prev => {
+      const newTabs = [ ...prev ];
+      const endpointAttributes = [ ...newTabs[routeIndex].attributes ];
+      const tempRef = { ...endpointAttributes[attributeIndex] }
+      tempRef[field] = value;
+      endpointAttributes[attributeIndex] = tempRef;
+      newTabs[routeIndex].attributes = endpointAttributes;
+
+      return newTabs;
+    })
   }
 
   const createTabs = () => {
@@ -78,6 +100,7 @@ function EscrowDetails() {
                 fields={endpoint}
                 addAttributeToRoute={addAttributeToRoute}
                 deleteAttributeFromRoute={deleteAttributeFromRoute}
+                handleAttributeOnChange={handleAttributeOnChange}
               />
             </Tab>
           ))

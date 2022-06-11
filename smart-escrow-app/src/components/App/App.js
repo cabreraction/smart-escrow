@@ -5,6 +5,7 @@ import EscrowGenerator from '../EscrowGenerator/Draft/EscrowGenerator';
 import EscrowDetails from '../EscrowGenerator/Details/EscrowDetails';
 import EscrowsHistory from '../EscrowsHistory/EscrowsHistory';
 import UniqueEscrowView from '../UniqueEscrowView/UniqueEscrowView';
+import ServiceValidation from '../EscrowGenerator/Validators/ServiceValidation';
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
         <Route 
           path='details/:id'
           element={ <EscrowDetails />}
+        />
+        <Route
+          path='validations/:id'
+          element={ServiceValidation}
         />
       </Route>
       <Route 

@@ -5,12 +5,17 @@ function EscrowRoute({
   handleRouteOnChange, 
   fields, 
   addAttributeToRoute, 
-  deleteAttributeFromRoute 
+  deleteAttributeFromRoute,
+  handleAttributeOnChange 
 }) {
   const { endpointRoute, operation, responseType, attributes } = fields;
 
   const deleteAttribute = (attributeIndex) => {
     deleteAttributeFromRoute(routeIndex, attributeIndex);
+  }
+
+  const attributeChange = (evt, field, attributeIndex) => {
+    handleAttributeOnChange(evt, field, attributeIndex, routeIndex);
   }
 
   return (
@@ -72,6 +77,7 @@ function EscrowRoute({
               allowsNull={attribute.allowsNull}
               attributeIndex={i}
               deleteAttribute={deleteAttribute}
+              attributeChange={attributeChange}
             />
           ))
         }
