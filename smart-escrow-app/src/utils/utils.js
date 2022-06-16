@@ -47,3 +47,27 @@ export function validatePriceInput(price) {
 
   return { status: 'ok' };
 }
+
+export function validateEscrowDetails(escrowDetails) {
+  for (let i = 0; i < escrowDetails.length; i++) {
+    const route = escrowDetails[i];
+    const repeatedElements = escrowDetails.filter(singleRoute => singleRoute.endpointRoute === route.endpointRoute && singleRoute.operation === route.operation);
+    if (repeatedElements.length > 1) {
+      return { status: 'failed', errorMessage: `Solo puede existir un endpoint con la misma ruta y el mismo metodo` };
+    } 
+    if (!route.endpointRoute) {
+      return { status: 'failed', errorMessage: `Debe definir una ruta para el endpoint no. ${i+1}` };
+    }
+    if (route.operation === 'get' && route.attributes.length === 0) {
+      return { status: 'failed', errorMessage: 'Las operaciones de tipo get deben tener respuestas con un atributo como mínimo' };
+    }
+    for (let j = 0; j < route.attributes.length; j++) {
+      const attribute = route.attributes[i];
+      if (!attribute.name) {
+        return { status: 'failed', errorMessage: `Debe definir un nombre para el atributo no. ${j+1} del endpoint ${i+1}` };
+      }
+    }
+  }
+
+  return { status: 'ok' };
+}

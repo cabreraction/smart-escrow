@@ -8,6 +8,9 @@ import Main from '../../Main/Main'
 import EscrowRoute from './EscrowRoute';
 import ProcessInfo from '../../ProcessInfo/ProcessInfo'
 import { escrowDetailsGenerationGuide } from '../../../content/content';
+import { validateEscrowDetails } from '../../../utils/utils';
+import { errorAlert } from '../../../services/alertService';
+import { addEscrowDetails } from '../../../services/escrowService';
 
 function EscrowDetails() {
   const { id: escrowId } = useParams();
@@ -29,6 +32,14 @@ function EscrowDetails() {
         attributes: []
       });
       return newTabs; 
+    })
+  }
+
+  const deleteEndpoint = (index) => {
+    setEndpointTabs(prev => {
+      const newTabs = [ ...prev ];
+      newTabs.splice(index, 1);
+      return newTabs;
     })
   }
 
@@ -96,6 +107,7 @@ function EscrowDetails() {
             <Tab eventKey={index + 1} title={`${`Endpoint ${index + 1}`}`} key={index + 1}>
               <EscrowRoute
                 routeIndex={index}
+                deleteEndpoint={deleteEndpoint}
                 handleRouteOnChange={handleRouteOnChange}
                 fields={endpoint}
                 addAttributeToRoute={addAttributeToRoute}
@@ -109,8 +121,24 @@ function EscrowDetails() {
     )
   }
 
-  const addRouteInformationToEscrowDraft = () => {
-    console.log(endpointTabs);
+  const addRouteInformationToEscrowDraft = async () => {
+    const { status, errorMessage } = validateEscrowDetails(endpointTabs);
+    if (status !== 'ok') {
+      errorAlert(errorMessage);
+      return;
+    }
+
+    // navigate to validators page
+    const response = await addEscrowDetails(escrowId, endpointTabs);
+    if (response.status === 200) {
+      // const escrowId = response.escrowId; --> this needs to be send to the next page as a parameter
+      // navigate('escrows-history')
+      console.log(endpointTabs);
+      console.log('im navigating to the next thing')
+    } else {
+      // errorAlert('Algo ha salido mal, por favor intenta de nuevo');
+      navigate(`../validations/${escrowId}`);
+    }
   }
 
   const discardDetails = () => {

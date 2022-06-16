@@ -31,7 +31,7 @@ function App() {
         />
         <Route
           path='validations/:id'
-          element={ServiceValidation}
+          element={ <ServiceValidation />}
         />
       </Route>
       <Route 

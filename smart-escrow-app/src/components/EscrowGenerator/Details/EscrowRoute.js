@@ -2,6 +2,7 @@ import RouteAttribute from './RouteAttribute';
 
 function EscrowRoute({ 
   routeIndex,
+  deleteEndpoint,
   handleRouteOnChange, 
   fields, 
   addAttributeToRoute, 
@@ -20,7 +21,7 @@ function EscrowRoute({
 
   return (
     <div className='container my-3'>
-      <div className='row my-4'>
+      <div className='row my-5'>
         <div className='col-sm-4'>
           <label className='mx-1 mb-1'>Endpoint</label>
           <input 
@@ -44,7 +45,7 @@ function EscrowRoute({
             <option value='delete'>DELETE</option>
           </select>
         </div>
-        <div className='col-sm-4'>
+        <div className='col-sm-2'>
           <label className='mx-1 mb-1'>Tipo de Respuesta</label>
           <select 
             className='form-select' 
@@ -55,8 +56,17 @@ function EscrowRoute({
             <option value='array'>Array</option>
           </select>
         </div>
+        <div className='col-sm-2 d-flex align-items-end'>
+          <button 
+            className='btn btn-outline-danger w-100'
+            onClick={() => deleteEndpoint(routeIndex)}
+          >
+            Eliminar Ruta
+          </button>
+        </div>
       </div>
-      <div className="row my-3">
+      <hr />
+      <div className="row mt-5 mb-3">
         <div className="d-flex justify-content-between">
           <h3>Atributos de la respuesta</h3>
           <button 
