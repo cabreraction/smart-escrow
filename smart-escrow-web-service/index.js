@@ -4,6 +4,7 @@ const cors = require('cors');
 const signup = require('./controllers/signup').signup;
 const login = require('./controllers/login').login;
 const createEscrow = require('./controllers/escrow').createEscrow;
+const addEscrowDetails = require('./controllers/escrow').addEscrowDetails;
 
 const port = 4000;
 
@@ -21,6 +22,7 @@ app.post('/login', login);
 
 // Controllers - Escrow
 app.post('/escrow', createEscrow);
+app.post('/escrow-details', addEscrowDetails);
 
 app.listen(port, () => {
   console.log(`Smart Escrow listening on port ${port}`);
