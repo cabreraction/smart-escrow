@@ -80,3 +80,34 @@ export function createEscrowDraft(draft) {
   const escrowsDataJSON = JSON.parse(escrowsData);
   return writeEscrowsDataToFile(escrowsDataJSON);
 }
+
+export function getEscrowById(id) {
+  const escrowsData = loadEscrowsData();
+  if (escrowsData.length === 0) {
+    return null;
+  }
+
+  const filteredEscrows = escrowsData.filter(escrow => escrow.id === id);
+  if (filteredEscrows.length > 0) {
+    return filteredEscrows[0];
+  }
+
+  return null;
+}
+
+export function updateEscrowRoutes(id, routes) {
+  const escrowsData = loadEscrowsData();
+  if (escrowsData.length === 0) {
+    return false;
+  }
+
+  const updatedEscrowsData = escrowsData.map(escrow => {
+    if (escrow.id === id) {
+      escrow.routes = routes;
+      escrow.status = 'detailed';
+    }
+  });
+  const escrowsDataJSON = JSON.parse(updatedEscrowsData);
+
+  return writeEscrowsDataToFile(escrowsDataJSON);
+}

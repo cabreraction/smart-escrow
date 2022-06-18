@@ -1,13 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import persistance from '../services/persistance.js';
-const { createEscrowDraft } = persistance;
+const { createEscrowDraft, updateEscrowRoutes, getEscrowById } = persistance;
 
 export function createEscrow(req, res) {
   const { escrowName, expirationDate, expirationTime, escrowPrice, escrowDescription, userId } = req.body;
 
   const id = uuidv4();
   const draft = {
+    id,
     name: escrowName,
     expirationDate, 
     expirationTime,
@@ -15,7 +16,8 @@ export function createEscrow(req, res) {
     description: escrowDescription,
     userId,
     routes: [],
-    validations: []
+    validations: [],
+    status: 'drafted'
   };
   createEscrowDraft(draft);
 
@@ -23,15 +25,15 @@ export function createEscrow(req, res) {
 }
 
 export function addEscrowDetails(req, res) {
-  const { id, routes, userId } = req.body;
-  const escrow = findEscrowById(id);
+  const { id, routes } = req.body;
+  const result = updateEscrowRoutes(id, routes);
 
-  if (!escrow) {
-    res.status(404).send({ escrowId: -1 });
+  if (!result) {
+    res.status(500).send({ operationStatus: 'failed', errorMessage: 'Ha ocurrido un error, vuelva a intentar mas tarde', escrowId: -1 });
+    return
   }
 
-  // save escrow to database
-  res.status(200).send({ escrowId: 0 });
+  res.status(200).send({ escrowId: id });
 }
 
 export function addRouteValidations(req, res) {
@@ -39,17 +41,12 @@ export function addRouteValidations(req, res) {
 }
 
 export function getEscrow(req, res) {
-  const { id } = req.body;
+  const { id } = req.params;
+  let escrow = getEscrowById(id);
 
-  // look for the escrow in the database
-  let escrow = null;
   if (escrow) {
     res.status(200).send(escrow);
   } else {
     res.status(404).send(null);
   }
-}
-
-function findEscrowById(id) {
-  return null;
 }
