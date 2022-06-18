@@ -1,4 +1,4 @@
-exports.createEscrow = function createEscrow(req, res) {
+export function createEscrow(req, res) {
   const { escowName, expirationDate, expirationTime, escrowPrice, escrowDescription } = req.body;
 
   // save it along with creation date and time
@@ -7,7 +7,7 @@ exports.createEscrow = function createEscrow(req, res) {
   res.status(200).send({ escrowId: 0 });
 }
 
-exports.addEscrowDetails = function addEscrowDetails(req, res) {
+export function addEscrowDetails(req, res) {
   const { id, routes } = req.body;
   const escrow = findEscrowById(id);
 
@@ -19,11 +19,11 @@ exports.addEscrowDetails = function addEscrowDetails(req, res) {
   res.status(200).send({ escrowId: 0 });
 }
 
-exports.addRouteValidations = function addRouteValidations(req, res) {
+export function addRouteValidations(req, res) {
     
 }
 
-exports.getEscrow = function getEscrow(req, res) {
+export function getEscrow(req, res) {
   const { id } = req.body;
 
   // look for the escrow in the database

@@ -1,10 +1,9 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
 
-const signup = require('./controllers/signup').signup;
-const login = require('./controllers/login').login;
-const createEscrow = require('./controllers/escrow').createEscrow;
-const addEscrowDetails = require('./controllers/escrow').addEscrowDetails;
+import { signup } from './controllers/signup.js';
+import { login } from './controllers/login.js';
+import { createEscrow, addEscrowDetails } from './controllers/escrow.js';
 
 const port = 4000;
 

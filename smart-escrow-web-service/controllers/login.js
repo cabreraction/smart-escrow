@@ -1,4 +1,4 @@
-exports.login = function login(req, res) {
+export function login(req, res) {
     const { email, password } = req.body;
 
     // verify the password and email match
