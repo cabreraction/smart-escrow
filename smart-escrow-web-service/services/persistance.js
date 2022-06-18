@@ -1,9 +1,10 @@
-import { getUserByEmail, getUserById, createUser } from "./implementations/simple_storage/api.js";
+import { getUserByEmail, getUserById, createUser, createEscrowDraft } from "./implementations/simple_storage/api.js";
 
 const persistanceApi = {
   getUserByEmail,
   getUserById,
-  createUser
+  createUser,
+  createEscrowDraft
 }
 
 export default persistanceApi;

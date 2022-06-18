@@ -1,14 +1,29 @@
+import { v4 as uuidv4 } from 'uuid';
+
+import persistance from '../services/persistance.js';
+const { createEscrowDraft } = persistance;
+
 export function createEscrow(req, res) {
-  const { escowName, expirationDate, expirationTime, escrowPrice, escrowDescription } = req.body;
+  const { escrowName, expirationDate, expirationTime, escrowPrice, escrowDescription, userId } = req.body;
 
-  // save it along with creation date and time
-  // get escrow id
+  const id = uuidv4();
+  const draft = {
+    name: escrowName,
+    expirationDate, 
+    expirationTime,
+    price: escrowPrice, 
+    description: escrowDescription,
+    userId,
+    routes: [],
+    validations: []
+  };
+  createEscrowDraft(draft);
 
-  res.status(200).send({ escrowId: 0 });
+  res.status(200).send({ escrowId: id });
 }
 
 export function addEscrowDetails(req, res) {
-  const { id, routes } = req.body;
+  const { id, routes, userId } = req.body;
   const escrow = findEscrowById(id);
 
   if (!escrow) {
