@@ -10,6 +10,6 @@ export async function login(email, password) {
     const response = await axios.post(url, requestData);
     return {
         status: response.status,
-        user: response.data.user
+        id: response.data.id
     };
 }

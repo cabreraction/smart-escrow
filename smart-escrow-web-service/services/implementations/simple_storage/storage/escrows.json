@@ -1,22 +1,12 @@
 [
     {
-        "id": "57157741-b44d-46df-8447-ea9abc4092d1",
-        "name": "Test 1",
+        "id": "39017a01-20dd-4ac5-b737-4aad92227edf",
+        "name": "Test App",
         "expirationDate": "2022-06-30",
         "expirationTime": "23:59",
-        "price": "100",
-        "description": "Contrato de prueba 1.",
-        "routes": [],
-        "validations": [],
-        "status": "drafted"
-    },
-    {
-        "id": "4ee311d8-b544-4ed7-9230-c2acfa13c5dd",
-        "name": "Test 1",
-        "expirationDate": "2022-06-30",
-        "expirationTime": "23:59",
-        "price": "100",
-        "description": "Contrato de prueba 1.",
+        "price": "25",
+        "description": "Este aplicacion debe tener cuatro endpoints:\n- /add\n- /substract\n- /multiply\n- /divide\nCada uno de los cuatro endpoints debe ser de tipo POST y recibir dos parametros de tipo number: arg1 y arg2, debe retornar una respuesta con un atributo tipo number llamado res que contengo el resultado de la operacion correspondiente al endpoint",
+        "userId": "7617b3b9-43e2-4574-8a2f-0bf0d349fe90",
         "routes": [],
         "validations": [],
         "status": "drafted"

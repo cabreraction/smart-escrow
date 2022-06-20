@@ -3,12 +3,14 @@ const draftUrl = 'http://localhost:4000/escrow';
 const detailsUrl = 'http://localhost:4000/escrow-details';
 
 export async function createEscrow(escrowName, escrowDescription, escrowPrice, expirationDate, expirationTime) {
+  const userId = localStorage.getItem('user');
   const requestData = {
     escrowName,
     escrowDescription,
     escrowPrice,
     expirationDate,
-    expirationTime
+    expirationTime,
+    userId
   };
 
   try {

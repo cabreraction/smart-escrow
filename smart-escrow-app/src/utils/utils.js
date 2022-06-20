@@ -49,6 +49,7 @@ export function validatePriceInput(price) {
 }
 
 export function validateEscrowDetails(escrowDetails) {
+  debugger
   for (let i = 0; i < escrowDetails.length; i++) {
     const route = escrowDetails[i];
     const repeatedElements = escrowDetails.filter(singleRoute => singleRoute.endpointRoute === route.endpointRoute && singleRoute.operation === route.operation);
@@ -62,7 +63,7 @@ export function validateEscrowDetails(escrowDetails) {
       return { status: 'failed', errorMessage: 'Las operaciones de tipo get deben tener respuestas con un atributo como mínimo' };
     }
     for (let j = 0; j < route.attributes.length; j++) {
-      const attribute = route.attributes[i];
+      const attribute = route.attributes[j];
       if (!attribute.name) {
         return { status: 'failed', errorMessage: `Debe definir un nombre para el atributo no. ${j+1} del endpoint ${i+1}` };
       }

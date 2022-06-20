@@ -102,12 +102,15 @@ export function updateEscrowRoutes(id, routes) {
   }
 
   const updatedEscrowsData = escrowsData.map(escrow => {
-    if (escrow.id === id) {
-      escrow.routes = routes;
-      escrow.status = 'detailed';
+    const modifiedEscrow = { ...escrow };
+    if (modifiedEscrow.id === id) {
+      modifiedEscrow.routes = routes;
+      modifiedEscrow.status = 'detailed';
     }
+
+    return modifiedEscrow;
   });
-  const escrowsDataJSON = JSON.parse(updatedEscrowsData);
+  const escrowsDataJSON = JSON.stringify(updatedEscrowsData);
 
   return writeEscrowsDataToFile(escrowsDataJSON);
 }
