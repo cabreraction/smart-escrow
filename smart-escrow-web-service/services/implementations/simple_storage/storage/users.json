@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "id": "7617b3b9-43e2-4574-8a2f-0bf0d349fe90",
+        "email": "javier@gmail.com",
+        "walletAddress": "0x000000000000000000",
+        "userType": "",
+        "password": "1234"
+    }
+]

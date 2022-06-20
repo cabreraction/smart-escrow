@@ -77,7 +77,7 @@ function writeEscrowsDataToFile(data) {
 export function createEscrowDraft(draft) {
   const escrowsData = loadEscrowsData();
   escrowsData.push(draft);
-  const escrowsDataJSON = JSON.parse(escrowsData);
+  const escrowsDataJSON = JSON.stringify(escrowsData);
   return writeEscrowsDataToFile(escrowsDataJSON);
 }
 

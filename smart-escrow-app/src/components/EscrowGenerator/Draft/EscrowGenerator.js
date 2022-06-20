@@ -67,12 +67,9 @@ function EscrowGenerator() {
 
     const response = await createEscrow(name, description, escrowPrice, expirationDate, expirationTime);
     if (response.status === 200) {
-      // const escrowId = response.escrowId; --> this needs to be send to the next page as a parameter
-      // navigate('escrows-history')
-      console.log('im navigating to the next thing')
-    } else {
-      // errorAlert('Algo ha salido mal, por favor intenta de nuevo');
       navigate(`../details/${response.escrowId}`);
+    } else {
+      errorAlert('Algo ha salido mal, por favor intenta de nuevo');
     }
   };
 

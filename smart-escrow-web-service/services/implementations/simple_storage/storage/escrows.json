@@ -1,1 +1,24 @@
-[]
+[
+    {
+        "id": "57157741-b44d-46df-8447-ea9abc4092d1",
+        "name": "Test 1",
+        "expirationDate": "2022-06-30",
+        "expirationTime": "23:59",
+        "price": "100",
+        "description": "Contrato de prueba 1.",
+        "routes": [],
+        "validations": [],
+        "status": "drafted"
+    },
+    {
+        "id": "4ee311d8-b544-4ed7-9230-c2acfa13c5dd",
+        "name": "Test 1",
+        "expirationDate": "2022-06-30",
+        "expirationTime": "23:59",
+        "price": "100",
+        "description": "Contrato de prueba 1.",
+        "routes": [],
+        "validations": [],
+        "status": "drafted"
+    }
+]

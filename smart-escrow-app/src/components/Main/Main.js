@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 function Main({ children }) {
   return (
@@ -15,10 +16,10 @@ function Main({ children }) {
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
               <li className="nav-item">
-                <a className="nav-link" href="#">Contratos</a>
+                <Link className="nav-link" to="/escrows-history">Contratos</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Generador</a>
+                <Link className="nav-link" to="/escrow-generation/draft">Generador</Link>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="#">Encontrar</a>

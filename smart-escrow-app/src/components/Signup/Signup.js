@@ -59,8 +59,9 @@ function Signup() {
       return;
     }
 
-    const responseStatus = await signup(email, userType, walletAddress, password);
-    if (responseStatus === 200) {
+    const response = await signup(email, userType, walletAddress, password);
+    if (response.status === 200) {
+      localStorage.setItem('user', String(response.id));
       navigate('escrows-history')
     } else {
       errorAlert('Algo ha salido mal, por favor intenta de nuevo');

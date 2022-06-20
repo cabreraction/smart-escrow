@@ -10,7 +10,7 @@ export async function signup(email, userType, walletAddress, password) {
     }
 
     const response = await axios.post(url, requestData);
-    return response.status;
+    return response;
 }
 
 export async function mockSignup({email, userType, walletAddress, password}) {
