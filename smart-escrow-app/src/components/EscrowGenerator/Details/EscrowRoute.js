@@ -20,7 +20,7 @@ function EscrowRoute({
   }
 
   return (
-    <div className='container my-3'>
+    <div className='container-fluid my-3'>
       <div className='row my-5'>
         <div className='col-sm-4'>
           <label className='mx-1 mb-1'>Endpoint</label>

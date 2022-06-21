@@ -131,13 +131,9 @@ function EscrowDetails() {
     // navigate to validators page
     const response = await addEscrowDetails(escrowId, endpointTabs);
     if (response.status === 200) {
-      // const escrowId = response.escrowId; --> this needs to be send to the next page as a parameter
-      // navigate('escrows-history')
-      console.log(endpointTabs);
-      console.log('im navigating to the next thing')
-    } else {
-      // errorAlert('Algo ha salido mal, por favor intenta de nuevo');
       navigate(`../validations/${escrowId}`);
+    } else {
+      errorAlert('Algo ha salido mal, por favor intenta de nuevo');
     }
   }
 
@@ -148,7 +144,7 @@ function EscrowDetails() {
   return (
     <Main>
       <div className='d-flex flex-column mx-2'>
-        <div className='container mb-4'>
+        <div className='container-fluid mb-4'>
           <h1 className='mb-4'>Detalles del Fideicomiso</h1>
           <ProcessInfo 
             { ...escrowDetailsGenerationGuide } 
