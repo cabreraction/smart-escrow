@@ -154,3 +154,17 @@ export function updateEscrowCode(id, code) {
 
   return writeEscrowsDataToFile(escrowsDataJSON);
 }
+
+export function getEscrowsByOwnerId(id) {
+  const escrowsData = loadEscrowsData();
+  if (escrowsData.length === 0) {
+    return [];
+  }
+
+  const filteredEscrows = escrowsData.filter(escrow => escrow.userId === id);
+  if (filteredEscrows.length > 0) {
+    return filteredEscrows[0];
+  }
+
+  return [];
+}

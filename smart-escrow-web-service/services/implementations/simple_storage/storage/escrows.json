@@ -57,7 +57,33 @@
                 ]
             }
         ],
-        "validations": [],
-        "status": "detailed"
+        "validations": [
+            {
+                "endpoint": "/add",
+                "operation": "post",
+                "input": "",
+                "output": ""
+            },
+            {
+                "endpoint": "/substract",
+                "operation": "post",
+                "input": "",
+                "output": ""
+            },
+            {
+                "endpoint": "/multiply",
+                "operation": "post",
+                "input": "",
+                "output": ""
+            },
+            {
+                "endpoint": "/divide",
+                "operation": "post",
+                "input": "",
+                "output": ""
+            }
+        ],
+        "status": "stand by",
+        "code": "6frCiP86hs"
     }
 ]

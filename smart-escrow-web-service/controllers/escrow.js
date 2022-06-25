@@ -7,7 +7,8 @@ const {
   updateEscrowRoutes, 
   getEscrowById, 
   updateEscrowValidations,
-  updateEscrowCode 
+  updateEscrowCode,
+  getEscrowsByOwnerId 
 } = persistance;
 
 export function createEscrow(req, res) {
@@ -64,13 +65,22 @@ export function addEscrowValidations(req, res) {
     return
   }
 
-  const code = new ShortUniqueId({ length: 10 });
+  const uid = new ShortUniqueId({ length: 10 });
+  const code = uid();
   const codeResult = updateEscrowCode(id, code)
 
   if (!codeResult) {
     res.status(500).send({ operationStatus: 'failed', errorMessage: 'Ha ocurrido un error, vuelva a intentar mas tarde'});
     return
   }
-  
+
   res.status(200).send({ escrowCode: code });
 }
+
+export function getOwnerEscrows(req, res) {
+  const { id } = req.params;
+  let escrows = getEscrowsByOwnerId(id);
+
+  res.status(200).send(escrows);
+}
+

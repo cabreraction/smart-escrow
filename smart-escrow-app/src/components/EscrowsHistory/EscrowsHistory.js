@@ -2,95 +2,47 @@ import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 
 import Main from '../Main/Main';
-import { getEscrows } from '../../services/backendService';
+import { getOwnerEscrows } from '../../services/escrowService';
 
 function EscrowsHistory() {
-  const [ activeEscrows, setActiveEscrows ] = useState([]);
-  const [ expiredEscrows, setExpiredEscrows ] = useState([]);
-  const [ completedEscrows, setCompletedEscrows ] = useState([]);
+  const [ escrows, setEscrows ] = useState([]);
 
   useEffect(() => {
-    const rawEscrows = getEscrows();
-    const localActive = rawEscrows.filter(escrow => escrow.state === 'active');
-    setActiveEscrows(localActive);
-    const localExpired = rawEscrows.filter(escrow => escrow.state === 'expired');
-    setExpiredEscrows(localExpired);
-    const localCompleted = rawEscrows.filter(escrow => escrow.state === 'completed');
-    setCompletedEscrows(localCompleted);
+    async function localFetch() {
+      // get user Id
+      const tempId = localStorage.getItem('user');
+      const userId = tempId;
+      const temp = getOwnerEscrows(userId);
+      setEscrows(temp);
+    }
+    localFetch();
   }, []);
 
   return (
     <Main>
       <div className='d-flex flex-column mx-2'>
         <div>
-          <h2>Fideicomisos Activos</h2>
+          <h2 className='mb-3'>Fideicomisos</h2>
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>id</th>
+                <th>codigo</th>
                 <th>Nombre</th>
+                <th>Estado</th>
                 <th>Fecha de Expiraci&oacute;n</th>
                 <th>Precio</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {
-                activeEscrows.map(active => (
+                escrows.length > 0 && escrows.map(escrow => (
                   <tr>
-                    <td>{active.id}</td>
-                    <td>{active.name}</td>
-                    <td>{active.expiration_date}</td>
-                    <td>{active.price}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </Table>
-        </div>
-        <div>
-          <h2>Fideicomisos Expirados</h2>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>Nombre</th>
-                <th>Fecha de Expiraci&oacute;n</th>
-                <th>Precio</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                expiredEscrows.map(expired => (
-                  <tr>
-                    <td>{expired.id}</td>
-                    <td>{expired.name}</td>
-                    <td>{expired.expiration_date}</td>
-                    <td>{expired.price}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </Table>
-        </div>
-        <div>
-          <h2>Fideicomisos Completados</h2>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>Nombre</th>
-                <th>Fecha de Expiraci&oacute;n</th>
-                <th>Precio</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                completedEscrows.map(completed => (
-                  <tr>
-                    <td>{completed.id}</td>
-                    <td>{completed.name}</td>
-                    <td>{completed.expiration_date}</td>
-                    <td>{completed.price}</td>
+                    <td>{escrow.code}</td>
+                    <td>{escrow.name}</td>
+                    <td>{escrow.status}</td>
+                    <td>{escrow.expirationDate}</td>
+                    <td>{escrow.price}</td>
                   </tr>
                 ))
               }

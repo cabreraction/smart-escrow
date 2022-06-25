@@ -68,6 +68,23 @@ export async function getEscrow(id) {
   }
 }
 
+export async function getOwnerEscrows(id) {
+  try {
+    const response = await axios.get(`${baseUrl}owner/${id}`);
+    return {
+      status: response.status,
+      escrows: response.data
+    }
+  }
+  catch (e) {
+    console.error(e);
+    return {
+      status: 404,
+      escrow: []
+    }
+  }
+}
+
 export async function addEscrowValidations(id, validations) {
   const requestData = {
     id,
@@ -76,8 +93,10 @@ export async function addEscrowValidations(id, validations) {
 
   try {
     const response = await axios.post(validationsUrl, requestData);
+    console.log(response)
     return {
-      status: response.status
+      status: response.status,
+      code: response.data.escrowCode
     }
   }
   catch {
