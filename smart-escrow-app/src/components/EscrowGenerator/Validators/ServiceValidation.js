@@ -9,17 +9,24 @@ import Main from '../../Main/Main';
 import ProcessInfo from '../../ProcessInfo/ProcessInfo';
 import { escrowValidatorsGenerationGuide } from '../../../content/content';
 import { getEscrow } from '../../../services/escrowService';
+import InputOutput from './InputOutput';
 
 function ServiceValidation() {
   const { id: escrowId } = useParams();
-  const [ routes, setRoutes ] = useState([]);
-  const [ validations, setValidations ] = ([]);
+  const [ validations, setValidations ] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       const { escrow, status } = await getEscrow(escrowId);
       if (status === 200) {
-        setRoutes(escrow.routes);
+        const mappedValidations = escrow.routes.map(route => ({
+          endpoint: route.endpointRoute,
+          operation: route.operation,
+          input: '',
+          output: ''
+        }));
+
+        setValidations(mappedValidations);
       } else {
         // report error and move to escrow history ??
       }
@@ -27,11 +34,22 @@ function ServiceValidation() {
     fetchData();
   }, [escrowId]);
 
+  const onValidationChange = (value, index, type) => {
+    setValidations(prev => {
+      const temp = [ ...prev ];
+      temp[index][type] = value;
+
+      return temp;
+    });
+  }
+
   const getTabsFromRoutes = () => {
-    const routeTabs = routes.map((route, index) => (
-      <Nav.Item>
+    const routeTabs = validations && validations.map((validation, index) => (
+      <Nav.Item key={`${validation.endpoint}-${validation.operation}-${index}`}>
         <Nav.Item>
-          <Nav.Link eventKey={index+1}>{`${route.endpointRoute} - ${route.operation}`}</Nav.Link>
+          <Nav.Link eventKey={index+1}>
+            {`${validation.endpoint} - ${validation.operation}`}
+          </Nav.Link>
         </Nav.Item>
       </Nav.Item>
     ))
@@ -40,14 +58,19 @@ function ServiceValidation() {
   }
 
   const getTabsContentFromRoutes = () => {
-    const routeTabsContent = routes.map((route, index) => (
-      <div>
-        <TabPane eventKey={index+1}>
-          <div className='border border-solid'>
-          yeah yeah yeahs
-          </div>
-        </TabPane>
-      </div>
+    const routeTabsContent = validations && validations.map((validation, index) => (
+      <TabPane 
+        eventKey={index+1}
+        key={`${validation.endpoint}-${index}-${validation.operation}`}
+      >
+        <InputOutput 
+          readOnly={false} 
+          input={validation.input}
+          output={validation.output}
+          index={index}
+          onChange={onValidationChange}
+        />
+      </TabPane>
     ));
 
     return routeTabsContent;
@@ -66,6 +89,7 @@ function ServiceValidation() {
               <div className="col-sm-2">
                <Nav variant="pills" className="flex-column">
                 {getTabsFromRoutes()}
+                <button className="btn btn-outline-info mt-4">Enviar</button>
                </Nav>
               </div>
               <div className="col-sm-10">

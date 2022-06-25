@@ -17,11 +17,11 @@ function InputOutput(props) {
 
   return (
     <div className='d-flex flex-column'>
-      <div className='my-3'>
+      <div className='mb-3'>
         <div className='d-flex justify-content-between mb-2 align-items-end'>
-          <label>Entrada:</label>
-          <button className='btn btn-outline-primary'>Importar</button>
-          <input type='file' accept=".json" hidden></input>
+          <strong>Entrada:</strong>
+          { /* <button className='btn btn-outline-primary'>Importar</button> */ }
+          { /* <input type='file' accept=".json" hidden></input> */ }
         </div>
         <AceEditor
           mode='json'
@@ -35,9 +35,9 @@ function InputOutput(props) {
       </div>
       <div>
         <div className='d-flex justify-content-between mb-2 align-items-end'>
-          <label>Salida:</label>
-          <button className='btn btn-outline-primary'>Importar</button>
-          <input type='file' accept=".json" hidden></input>
+          <strong>Salida:</strong>
+          { /* <button className='btn btn-outline-primary'>Importar</button> */ }
+          { /* <input type='file' accept=".json" hidden></input> */ }
         </div>
         <AceEditor
           mode='json'
@@ -49,7 +49,6 @@ function InputOutput(props) {
           onChange={outputChange}
         />
       </div>
-      <hr />
     </div>
   );
 }
