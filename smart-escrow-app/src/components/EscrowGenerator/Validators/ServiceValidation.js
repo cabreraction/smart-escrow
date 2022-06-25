@@ -8,8 +8,9 @@ import Nav from 'react-bootstrap/Nav';
 import Main from '../../Main/Main';
 import ProcessInfo from '../../ProcessInfo/ProcessInfo';
 import { escrowValidatorsGenerationGuide } from '../../../content/content';
-import { getEscrow } from '../../../services/escrowService';
+import { getEscrow, addEscrowValidations } from '../../../services/escrowService';
 import InputOutput from './InputOutput';
+import { errorAlert } from '../../../services/alertService';
 
 function ServiceValidation() {
   const { id: escrowId } = useParams();
@@ -41,6 +42,23 @@ function ServiceValidation() {
 
       return temp;
     });
+  }
+
+  const registerValidations = async () => {
+    /* VALIDATIONS
+    const { status, errorMessage } = validateEscrowDetails(endpointTabs);
+    if (status !== 'ok') {
+      errorAlert(errorMessage);
+      return;
+    } */
+
+    // navigate to validators page
+    const response = await addEscrowValidations(escrowId, validations);
+    if (response.status === 200) {
+      // show a modal with the code for the escrow to start
+    } else {
+      errorAlert('Algo ha salido mal, por favor intenta de nuevo');
+    }
   }
 
   const getTabsFromRoutes = () => {
@@ -89,7 +107,12 @@ function ServiceValidation() {
               <div className="col-sm-2">
                <Nav variant="pills" className="flex-column">
                 {getTabsFromRoutes()}
-                <button className="btn btn-outline-info mt-4">Enviar</button>
+                <button 
+                  className="btn btn-outline-info mt-4"
+                  onClick={registerValidations}
+                >
+                  Enviar
+                </button>
                </Nav>
               </div>
               <div className="col-sm-10">

@@ -2,7 +2,7 @@ import axios from 'axios';
 const draftUrl = 'http://localhost:4000/escrow';
 const detailsUrl = 'http://localhost:4000/escrow-details';
 const baseUrl = 'http://localhost:4000/escrow/';
-
+const validationsUrl = 'http://localhost:4000/escrow-validations';
 
 export async function createEscrow(escrowName, escrowDescription, escrowPrice, expirationDate, expirationTime) {
   const userId = localStorage.getItem('user');
@@ -65,5 +65,25 @@ export async function getEscrow(id) {
       status: 404,
       escrow: null
     }
+  }
+}
+
+export async function addEscrowValidations(id, validations) {
+  const requestData = {
+    id,
+    validations
+  };
+
+  try {
+    const response = await axios.post(validationsUrl, requestData);
+    return {
+      status: response.status
+    }
+  }
+  catch {
+    return {
+      status: 500,
+      escrowId: 0
+    };
   }
 }

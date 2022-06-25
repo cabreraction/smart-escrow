@@ -114,3 +114,43 @@ export function updateEscrowRoutes(id, routes) {
 
   return writeEscrowsDataToFile(escrowsDataJSON);
 }
+
+export function updateEscrowValidations(id, validations) {
+  const escrowsData = loadEscrowsData();
+  if (escrowsData.length === 0) {
+    return false;
+  }
+
+  const updatedEscrowsData = escrowsData.map(escrow => {
+    const modifiedEscrow = { ...escrow };
+    if (modifiedEscrow.id === id) {
+      modifiedEscrow.validations = validations;
+      modifiedEscrow.status = 'stand by';
+    }
+
+    return modifiedEscrow;
+  });
+  const escrowsDataJSON = JSON.stringify(updatedEscrowsData);
+
+  return writeEscrowsDataToFile(escrowsDataJSON);
+}
+
+export function updateEscrowCode(id, code) {
+  const escrowsData = loadEscrowsData();
+  if (escrowsData.length === 0) {
+    return false;
+  }
+
+  const updatedEscrowsData = escrowsData.map(escrow => {
+    const modifiedEscrow = { ...escrow };
+    if (modifiedEscrow.id === id) {
+      modifiedEscrow.code = code;
+      modifiedEscrow.status = 'stand by';
+    }
+
+    return modifiedEscrow;
+  });
+  const escrowsDataJSON = JSON.stringify(updatedEscrowsData);
+
+  return writeEscrowsDataToFile(escrowsDataJSON);
+}

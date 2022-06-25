@@ -3,7 +3,12 @@ import cors from 'cors';
 
 import { signup } from './controllers/signup.js';
 import { login } from './controllers/login.js';
-import { createEscrow, addEscrowDetails, getEscrow } from './controllers/escrow.js';
+import { 
+  createEscrow, 
+  addEscrowDetails, 
+  getEscrow, 
+  addEscrowValidations 
+} from './controllers/escrow.js';
 
 const port = 4000;
 
@@ -23,6 +28,7 @@ app.post('/login', login);
 app.post('/escrow', createEscrow);
 app.post('/escrow-details', addEscrowDetails);
 app.get('/escrow/:id', getEscrow);
+app.post('/escrow-validations', addEscrowValidations)
 
 app.listen(port, () => {
   console.log(`Smart Escrow listening on port ${port}`);
