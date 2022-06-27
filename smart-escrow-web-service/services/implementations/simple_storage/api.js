@@ -161,10 +161,6 @@ export function getEscrowsByOwnerId(id) {
     return [];
   }
 
-  const filteredEscrows = escrowsData.filter(escrow => escrow.userId === id);
-  if (filteredEscrows.length > 0) {
-    return filteredEscrows[0];
-  }
-
-  return [];
+  const filteredEscrows = escrowsData.filter(escrow => escrow.ownerId === id);
+  return filteredEscrows;
 }

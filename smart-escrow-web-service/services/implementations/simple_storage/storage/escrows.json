@@ -6,7 +6,7 @@
         "expirationTime": "23:59",
         "price": "25",
         "description": "Este aplicacion debe tener cuatro endpoints:\n- /add\n- /substract\n- /multiply\n- /divide\nCada uno de los cuatro endpoints debe ser de tipo POST y recibir dos parametros de tipo number: arg1 y arg2, debe retornar una respuesta con un atributo tipo number llamado res que contengo el resultado de la operacion correspondiente al endpoint",
-        "userId": "7617b3b9-43e2-4574-8a2f-0bf0d349fe90",
+        "ownerId": "7c623854-d391-4b1d-bca2-fa32d5343c09",
         "routes": [
             {
                 "endpointRoute": "/add",

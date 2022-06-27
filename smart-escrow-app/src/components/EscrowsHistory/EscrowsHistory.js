@@ -9,11 +9,15 @@ function EscrowsHistory() {
 
   useEffect(() => {
     async function localFetch() {
-      // get user Id
-      const tempId = localStorage.getItem('user');
-      const userId = tempId;
-      const temp = getOwnerEscrows(userId);
-      setEscrows(temp);
+      const user = JSON.parse(localStorage.getItem('user'));
+      const userId = user.id;
+      let received = [];
+      if (user.type === 'employer') {
+        received = (await getOwnerEscrows(userId)).escrows;
+      } else {
+
+      }
+      setEscrows(received);
     }
     localFetch();
   }, []);
@@ -30,7 +34,7 @@ function EscrowsHistory() {
                 <th>Nombre</th>
                 <th>Estado</th>
                 <th>Fecha de Expiraci&oacute;n</th>
-                <th>Precio</th>
+                <th>Precio (USD)</th>
                 <th>Acciones</th>
               </tr>
             </thead>

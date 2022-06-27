@@ -18,5 +18,5 @@ export function signup(req, res) {
         return;
     }
 
-    res.status(200).send({ operationStatus: 'ok', id: id });
+    res.status(200).send({ operationStatus: 'ok', id: id, type: userType });
 }

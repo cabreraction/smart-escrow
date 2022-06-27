@@ -14,5 +14,5 @@ export function login(req, res) {
         return;
     }
 
-    res.status(200).send({ operationStatus: 'ok', id: user.id });
+    res.status(200).send({ operationStatus: 'ok', id: user.id, type: user.userType });
 }

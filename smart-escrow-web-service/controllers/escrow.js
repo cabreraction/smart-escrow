@@ -12,7 +12,7 @@ const {
 } = persistance;
 
 export function createEscrow(req, res) {
-  const { escrowName, expirationDate, expirationTime, escrowPrice, escrowDescription, userId } = req.body;
+  const { escrowName, expirationDate, expirationTime, escrowPrice, escrowDescription, ownerId } = req.body;
 
   const id = uuidv4();
   const draft = {
@@ -22,11 +22,12 @@ export function createEscrow(req, res) {
     expirationTime,
     price: escrowPrice, 
     description: escrowDescription,
-    userId,
+    ownerId,
     routes: [],
     validations: [],
     status: 'drafted',
-    code: ''
+    code: '',
+    developers: []
   };
   createEscrowDraft(draft);
 

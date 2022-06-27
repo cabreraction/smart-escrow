@@ -30,7 +30,7 @@ app.post('/escrow', createEscrow);
 app.post('/escrow-details', addEscrowDetails);
 app.get('/escrow/:id', getEscrow);
 app.post('/escrow-validations', addEscrowValidations)
-app.post('/escrow/owner/:id', getOwnerEscrows)
+app.get('/escrow/owner/:id', getOwnerEscrows)
 
 app.listen(port, () => {
   console.log(`Smart Escrow listening on port ${port}`);

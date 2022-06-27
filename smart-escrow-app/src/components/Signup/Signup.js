@@ -10,7 +10,7 @@ function Signup() {
   const [ walletAddress, setWalletAddress ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ passwordConfirmation, setPasswordConfirmation ] = useState('');
-  const [ userType, setUserType ] = useState('');
+  const [ userType, setUserType ] = useState('employer');
 
   const navigate = useNavigate();
 
@@ -60,8 +60,10 @@ function Signup() {
     }
 
     const response = await signup(email, userType, walletAddress, password);
+    debugger
     if (response.status === 200) {
-      localStorage.setItem('user', response.id);
+      const user = { id: response.id, type: response.type };
+      localStorage.setItem('user', JSON.stringify(user));
       navigate('escrows-history')
     } else {
       errorAlert('Algo ha salido mal, por favor intenta de nuevo');
@@ -91,7 +93,7 @@ function Signup() {
             onChange={handleOnChange}
             value={userType}
           >
-            <option value='employee'>Empleador</option>
+            <option value='employer'>Empleador</option>
             <option value='developer'>Desarrollador</option>
           </select>
         </div>

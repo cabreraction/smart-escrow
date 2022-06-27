@@ -10,6 +10,7 @@ export async function login(email, password) {
     const response = await axios.post(url, requestData);
     return {
         status: response.status,
-        id: response.data.id
+        id: response.data.id,
+        type: response.data.type
     };
 }

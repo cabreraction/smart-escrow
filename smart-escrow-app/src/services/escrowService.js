@@ -5,14 +5,14 @@ const baseUrl = 'http://localhost:4000/escrow/';
 const validationsUrl = 'http://localhost:4000/escrow-validations';
 
 export async function createEscrow(escrowName, escrowDescription, escrowPrice, expirationDate, expirationTime) {
-  const userId = localStorage.getItem('user');
+  const { id } = JSON.parse(localStorage.getItem('user'));
   const requestData = {
     escrowName,
     escrowDescription,
     escrowPrice,
     expirationDate,
     expirationTime,
-    userId
+    ownerId: id
   };
 
   try {
