@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
+import { ThreeDotsVertical } from 'react-bootstrap-icons';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import Main from '../Main/Main';
 import { getOwnerEscrows } from '../../services/escrowService';
@@ -41,12 +43,22 @@ function EscrowsHistory() {
             <tbody>
               {
                 escrows.length > 0 && escrows.map(escrow => (
-                  <tr>
+                  <tr key={escrow.id}>
                     <td>{escrow.code}</td>
                     <td>{escrow.name}</td>
                     <td>{escrow.status}</td>
                     <td>{escrow.expirationDate}</td>
                     <td>{escrow.price}</td>
+                    <td>
+                      <Dropdown>
+                        <Dropdown.Toggle as={ThreeDotsVertical} />
+                        <Dropdown.Menu>
+                          <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                          <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                          <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </td>
                   </tr>
                 ))
               }

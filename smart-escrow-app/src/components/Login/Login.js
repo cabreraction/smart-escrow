@@ -37,7 +37,8 @@ function Login() {
 
     const response = await login(email, password);
     if (response.status === 200) {
-      localStorage.setItem('user', response.id);
+      const user = { id: response.id, type: response.type };
+      localStorage.setItem('user', JSON.stringify(user));
       navigate('../escrows-history');
     } else {
       errorAlert('Algo ha salido mal, por favor intenta de nuevo');

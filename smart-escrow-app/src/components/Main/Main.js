@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
 function Main({ children }) {
+  const { type } = JSON.parse(localStorage.getItem('user'));
+
   return (
     <div>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
@@ -18,12 +20,18 @@ function Main({ children }) {
               <li className="nav-item">
                 <Link className="nav-link" to="/escrows-history">Contratos</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/escrow-generation/draft">Generador</Link>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">Encontrar</a>
-              </li>
+              {
+                type === 'employer' &&
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/escrow-generation/draft">Generador</Link>
+                  </li>
+              }
+              {
+                type === 'developer' &&
+                  <li className="nav-item">
+                    <a className="nav-link" href="#">Encontrar</a>
+                  </li>
+              }
             </ul>
           </div>
         </div>

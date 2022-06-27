@@ -6,6 +6,7 @@ import EscrowDetails from '../EscrowGenerator/Details/EscrowDetails';
 import EscrowsHistory from '../EscrowsHistory/EscrowsHistory';
 import UniqueEscrowView from '../UniqueEscrowView/UniqueEscrowView';
 import ServiceValidation from '../EscrowGenerator/Validators/ServiceValidation';
+import FindEscrow from '../FindEscrow/FindEscrow';
 
 function App() {
   return (
@@ -41,6 +42,10 @@ function App() {
       <Route
         path='escrow/:id'
         element={ <UniqueEscrowView />}
+      />
+      <Route
+        path='find'
+        element={ <FindEscrow /> }
       />
     </Routes>
   );
