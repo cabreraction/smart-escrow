@@ -8,7 +8,9 @@ const {
   getEscrowById, 
   updateEscrowValidations,
   updateEscrowCode,
-  getEscrowsByOwnerId 
+  getEscrowsByOwnerId,
+  getEscrowByCode: getEscrowByCodeFromPersistance,
+  addDeveloperToEscrow
 } = persistance;
 
 export function createEscrow(req, res) {
@@ -85,3 +87,25 @@ export function getOwnerEscrows(req, res) {
   res.status(200).send(escrows);
 }
 
+export function getEscrowByCode(req, res) {
+  const { code } = req.params;
+  let escrow = getEscrowByCodeFromPersistance(code);
+
+  if (escrow) {
+    res.status(200).send(escrow);
+  } else {
+    res.status(404).send(null);
+  }
+}
+
+export function acceptEscrow(req, res) {
+  const { userId, escrowId } = req.body;
+  const result = addDeveloperToEscrow(userId, escrowId);
+
+  if (!result) {
+    res.status(500).send({ operationStatus: 'failed', errorMessage: 'Ha ocurrido un error, vuelva a intentar mas tarde' });
+    return
+  }
+
+  res.status(200).send({ operationStatus: 'succeded' });
+}

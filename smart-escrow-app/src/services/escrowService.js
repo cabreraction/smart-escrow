@@ -93,7 +93,6 @@ export async function addEscrowValidations(id, validations) {
 
   try {
     const response = await axios.post(validationsUrl, requestData);
-    console.log(response)
     return {
       status: response.status,
       code: response.data.escrowCode
@@ -104,5 +103,39 @@ export async function addEscrowValidations(id, validations) {
       status: 500,
       escrowId: 0
     };
+  }
+}
+
+export async function getEscrowByCode(code) {
+  try {
+    const response = await axios.get(`${baseUrl}code/${code}`);
+    return {
+      status: response.status,
+      escrow: response.data
+    }
+  }
+  catch (e) {
+    console.error(e);
+    return {
+      status: 404,
+      escrow: null
+    }
+  }
+}
+
+export async function acceptEscrow(userId, escrowId) {
+  const requestData = {
+    userId,
+    escrowId
+  };
+
+  try {
+    const response = await axios.post(validationsUrl, requestData);
+    return {
+      status: response.status,
+    }
+  } catch (e) {
+    console.error(e);
+    return { status: 500 };
   }
 }

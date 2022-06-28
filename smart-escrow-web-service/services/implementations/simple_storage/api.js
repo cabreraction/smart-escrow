@@ -164,3 +164,37 @@ export function getEscrowsByOwnerId(id) {
   const filteredEscrows = escrowsData.filter(escrow => escrow.ownerId === id);
   return filteredEscrows;
 }
+
+export function getEscrowByCode(code) {
+  const escrowsData = loadEscrowsData();
+  if (escrowsData.length === 0) {
+    return null;
+  }
+
+  const filteredEscrows = escrowsData.filter(escrow => escrow.code === code);
+  if (filteredEscrows.length > 0) {
+    return filteredEscrows[0];
+  }
+
+  return null;
+}
+
+export function addDeveloperToEscrow(userId, escrowId) {
+  const escrowsData = loadEscrowsData();
+  if (escrowsData.length === 0) {
+    return false;
+  }
+
+  const updatedEscrowsData = escrowsData.map(escrow => {
+    const modifiedEscrow = { ...escrow };
+    if (modifiedEscrow.id === escrowId) {
+      modifiedEscrow.developers.push(userId);
+      modifiedEscrow.status = 'active';
+    }
+
+    return modifiedEscrow;
+  });
+  const escrowsDataJSON = JSON.stringify(updatedEscrowsData);
+
+  return writeEscrowsDataToFile(escrowsDataJSON);
+}

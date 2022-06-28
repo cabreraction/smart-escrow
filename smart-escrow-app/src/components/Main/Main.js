@@ -7,7 +7,7 @@ function Main({ children }) {
     <div>
       <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">Smart Escrow</a>
+          <span className="navbar-brand">Smart Escrow</span>
           {
               /*
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@ function Main({ children }) {
               {
                 type === 'developer' &&
                   <li className="nav-item">
-                    <a className="nav-link" href="#">Encontrar</a>
+                    <a className="nav-link" href="/find">Encontrar</a>
                   </li>
               }
             </ul>

@@ -8,7 +8,9 @@ import {
   addEscrowDetails, 
   getEscrow, 
   addEscrowValidations,
-  getOwnerEscrows 
+  getOwnerEscrows,
+  getEscrowByCode,
+  acceptEscrow 
 } from './controllers/escrow.js';
 
 const port = 4000;
@@ -25,12 +27,16 @@ app.get('/', (req, res) => {
 app.post('/signup', signup);
 app.post('/login', login);
 
-// Controllers - Escrow
+// Controllers - Escrow - POST
 app.post('/escrow', createEscrow);
 app.post('/escrow-details', addEscrowDetails);
+app.post('/escrow-validations', addEscrowValidations);
+app.post('/escrow/accept-escrow', acceptEscrow);
+
+// Controllers - Escrow - GET
 app.get('/escrow/:id', getEscrow);
-app.post('/escrow-validations', addEscrowValidations)
-app.get('/escrow/owner/:id', getOwnerEscrows)
+app.get('/escrow/owner/:id', getOwnerEscrows);
+app.get('/escrow/code/:code', getEscrowByCode);
 
 app.listen(port, () => {
   console.log(`Smart Escrow listening on port ${port}`);

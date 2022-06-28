@@ -5,5 +5,12 @@
         "walletAddress": "0x000000000000000000",
         "userType": "employer",
         "password": "1234"
+    },
+    {
+        "id": "5217cfb8-e258-4c6f-9774-e3258ed6835e",
+        "email": "developer@domain.com",
+        "walletAddress": "0x000000000000000000",
+        "userType": "developer",
+        "password": "1234"
     }
 ]
