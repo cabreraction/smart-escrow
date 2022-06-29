@@ -165,6 +165,16 @@ export function getEscrowsByOwnerId(id) {
   return filteredEscrows;
 }
 
+export function getEscrowsByDeveloperId(id) {
+  const escrowsData = loadEscrowsData();
+  if (escrowsData.length === 0) {
+    return [];
+  }
+
+  const filteredEscrows = escrowsData.filter(escrow => escrow.developers.includes(id));
+  return filteredEscrows;
+}
+
 export function getEscrowByCode(code) {
   const escrowsData = loadEscrowsData();
   if (escrowsData.length === 0) {

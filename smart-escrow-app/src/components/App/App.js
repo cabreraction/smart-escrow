@@ -7,17 +7,18 @@ import EscrowsHistory from '../EscrowsHistory/EscrowsHistory';
 import UniqueEscrowView from '../UniqueEscrowView/UniqueEscrowView';
 import ServiceValidation from '../EscrowGenerator/Validators/ServiceValidation';
 import FindEscrow from '../FindEscrow/FindEscrow';
+import Profile from '../Profile/Profile';
 
 function App() {
   return (
     <Routes>
       <Route 
         path='/' 
-        element={ <Signup /> } 
+        element={ <Login /> } 
       />
       <Route 
-        path='login' 
-        element={ <Login /> } 
+        path='signup' 
+        element={ <Signup /> } 
       />
       <Route 
         path='escrow-generation' 
@@ -46,6 +47,10 @@ function App() {
       <Route
         path='find'
         element={ <FindEscrow /> }
+      />
+      <Route 
+        path='profile' 
+        element={ <Profile /> } 
       />
     </Routes>
   );

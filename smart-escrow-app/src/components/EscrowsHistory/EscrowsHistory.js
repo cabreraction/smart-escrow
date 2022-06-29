@@ -2,31 +2,37 @@ import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { ThreeDotsVertical } from 'react-bootstrap-icons';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { Link } from "react-router-dom";
 
 import Main from '../Main/Main';
-import { getOwnerEscrows } from '../../services/escrowService';
+import { getOwnerEscrows, getDeveloperEscrows } from '../../services/escrowService';
 
 function EscrowsHistory() {
   const [ escrows, setEscrows ] = useState([]);
+  const [ user, setUser ] = useState(null);
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('user')));
+  }, [])
 
   useEffect(() => {
     async function localFetch() {
-      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) return;
       const userId = user.id;
       let received = [];
       if (user.type === 'employer') {
         received = (await getOwnerEscrows(userId)).escrows;
       } else {
-
+        received = (await getDeveloperEscrows(userId)).escrows;
       }
       setEscrows(received);
     }
     localFetch();
-  }, []);
+  }, [user]);
 
   return (
     <Main>
-      <div className='d-flex flex-column mx-2'>
+      <div className='d-flex flex-column mx-4'>
         <div>
           <h2 className='mb-3'>Fideicomisos</h2>
           <Table striped bordered hover>
@@ -53,9 +59,12 @@ function EscrowsHistory() {
                       <Dropdown>
                         <Dropdown.Toggle as={ThreeDotsVertical} />
                         <Dropdown.Menu>
-                          <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-                          <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-                          <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                          <Dropdown.Item href={`/escrow/${escrow.id}`}>
+                            Ver Detalles
+                          </Dropdown.Item>
+                          {
+                            user.type === 'employer' && <Dropdown.Item href="#">Editar</Dropdown.Item>
+                          }
                         </Dropdown.Menu>
                       </Dropdown>
                     </td>

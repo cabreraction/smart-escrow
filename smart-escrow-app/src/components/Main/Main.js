@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 function Main({ children }) {
   const { type } = JSON.parse(localStorage.getItem('user'));
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.clear();
+    navigate('/')
+  }
 
   return (
     <div>
@@ -18,6 +25,9 @@ function Main({ children }) {
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
               <li className="nav-item">
+                <Link className="nav-link" to="/profile">Perfil</Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/escrows-history">Contratos</Link>
               </li>
               {
@@ -29,10 +39,18 @@ function Main({ children }) {
               {
                 type === 'developer' &&
                   <li className="nav-item">
-                    <a className="nav-link" href="/find">Encontrar</a>
+                    <Link className="nav-link" to="/find">Encontrar</Link>
                   </li>
               }
             </ul>
+          </div>
+          <div>
+            <button 
+              className="btn btn-outline-warning"
+              onClick={logout}
+            >
+              Cerrar Sesi&oacute;n
+            </button>
           </div>
         </div>
       </nav>

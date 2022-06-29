@@ -9,7 +9,8 @@ import {
   updateEscrowCode,
   getEscrowsByOwnerId,
   getEscrowByCode,
-  addDeveloperToEscrow
+  addDeveloperToEscrow,
+  getEscrowsByDeveloperId
 } from "./implementations/simple_storage/api.js";
 
 const persistanceApi = {
@@ -23,7 +24,8 @@ const persistanceApi = {
   updateEscrowCode,
   getEscrowsByOwnerId,
   getEscrowByCode,
-  addDeveloperToEscrow
+  addDeveloperToEscrow,
+  getEscrowsByDeveloperId
 }
 
 export default persistanceApi;

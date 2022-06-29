@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 
 import Main from '../Main/Main';
-import { getEscrowByCode } from '../../services/escrowService';
+import { getEscrowByCode, acceptEscrow } from '../../services/escrowService';
 import { errorAlert } from '../../services/alertService';
 
 function FindEscrow() {
@@ -27,9 +27,15 @@ function FindEscrow() {
     }
   }
 
-  const acceptEscrow = () => {
+  const triggerAcceptEscrow = async () => {
     const { id } = JSON.parse(localStorage.getItem('user'));
-    console.log('user id', id)
+    const { status } = await acceptEscrow(id, foundEscrow.id);
+
+    if (status === 200) {
+      navigate('../escrows-history');
+    } else {
+      errorAlert('Ha ocurrido un error, intenta de nuevo en un momento');
+    }
   }
 
   return (
@@ -73,7 +79,7 @@ function FindEscrow() {
           <button className='btn btn-outline-info' onClick={null}>
             Ver detalles
           </button>
-          <button className='btn btn-outline-primary' onClick={acceptEscrow}>
+          <button className='btn btn-outline-primary' onClick={triggerAcceptEscrow}>
             Aceptar
           </button>
         </Modal.Footer>

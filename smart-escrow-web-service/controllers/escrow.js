@@ -10,7 +10,8 @@ const {
   updateEscrowCode,
   getEscrowsByOwnerId,
   getEscrowByCode: getEscrowByCodeFromPersistance,
-  addDeveloperToEscrow
+  addDeveloperToEscrow,
+  getEscrowsByDeveloperId
 } = persistance;
 
 export function createEscrow(req, res) {
@@ -83,6 +84,13 @@ export function addEscrowValidations(req, res) {
 export function getOwnerEscrows(req, res) {
   const { id } = req.params;
   let escrows = getEscrowsByOwnerId(id);
+
+  res.status(200).send(escrows);
+}
+
+export function getDeveloperEscrows(req, res) {
+  const { id } = req.params;
+  let escrows = getEscrowsByDeveloperId(id);
 
   res.status(200).send(escrows);
 }

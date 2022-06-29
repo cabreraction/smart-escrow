@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import { login } from '../../services/loginService';
 import { errorAlert } from '../../services/alertService';
@@ -39,7 +40,7 @@ function Login() {
     if (response.status === 200) {
       const user = { id: response.id, type: response.type };
       localStorage.setItem('user', JSON.stringify(user));
-      navigate('../escrows-history');
+      navigate('escrows-history');
     } else {
       errorAlert('Algo ha salido mal, por favor intenta de nuevo');
     }
@@ -77,6 +78,11 @@ function Login() {
         >
           Iniciar Sesi&oacute;n
         </button>
+        <div className='d-flex justify-content-center mt-2'>
+          <small>
+            <Link className="nav-link" to="/signup">¿No tienes una cuenta? Reg&iacute;strate</Link>
+          </small>
+        </div>
       </div>
     </div>
   )

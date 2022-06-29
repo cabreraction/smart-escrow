@@ -9,6 +9,7 @@ import {
   getEscrow, 
   addEscrowValidations,
   getOwnerEscrows,
+  getDeveloperEscrows,
   getEscrowByCode,
   acceptEscrow 
 } from './controllers/escrow.js';
@@ -36,6 +37,7 @@ app.post('/escrow/accept-escrow', acceptEscrow);
 // Controllers - Escrow - GET
 app.get('/escrow/:id', getEscrow);
 app.get('/escrow/owner/:id', getOwnerEscrows);
+app.get('/escrow/developer/:id', getDeveloperEscrows);
 app.get('/escrow/code/:code', getEscrowByCode);
 
 app.listen(port, () => {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { signup } from '../../services/signupService';
 import { errorAlert } from '../../services/alertService';
@@ -64,7 +65,7 @@ function Signup() {
     if (response.status === 200) {
       const user = { id: response.id, type: response.type };
       localStorage.setItem('user', JSON.stringify(user));
-      navigate('escrows-history')
+      navigate('../escrows-history')
     } else {
       errorAlert('Algo ha salido mal, por favor intenta de nuevo');
     }
@@ -131,6 +132,11 @@ function Signup() {
           />
         </div>
         <button className='w-100 btn btn-md btn-outline-primary' onClick={handleOnClick}>Registrarme</button>
+        <div className='d-flex justify-content-center mt-2'>
+          <small>
+            <Link className="nav-link" to="/">¿Ya tienes cuenta? Inicia Sesi&oacute;n</Link>
+          </small>
+        </div>
       </div>
     </div>
   )

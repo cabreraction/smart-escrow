@@ -3,6 +3,7 @@ const draftUrl = 'http://localhost:4000/escrow';
 const detailsUrl = 'http://localhost:4000/escrow-details';
 const baseUrl = 'http://localhost:4000/escrow/';
 const validationsUrl = 'http://localhost:4000/escrow-validations';
+const acceptanceUrl = 'http://localhost:4000/escrow/accept-escrow';
 
 export async function createEscrow(escrowName, escrowDescription, escrowPrice, expirationDate, expirationTime) {
   const { id } = JSON.parse(localStorage.getItem('user'));
@@ -85,6 +86,23 @@ export async function getOwnerEscrows(id) {
   }
 }
 
+export async function getDeveloperEscrows(id) {
+  try {
+    const response = await axios.get(`${baseUrl}developer/${id}`);
+    return {
+      status: response.status,
+      escrows: response.data
+    }
+  }
+  catch (e) {
+    console.error(e);
+    return {
+      status: 404,
+      escrow: []
+    }
+  }
+}
+
 export async function addEscrowValidations(id, validations) {
   const requestData = {
     id,
@@ -130,7 +148,7 @@ export async function acceptEscrow(userId, escrowId) {
   };
 
   try {
-    const response = await axios.post(validationsUrl, requestData);
+    const response = await axios.post(acceptanceUrl, requestData);
     return {
       status: response.status,
     }

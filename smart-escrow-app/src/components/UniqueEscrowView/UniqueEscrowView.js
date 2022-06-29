@@ -2,20 +2,28 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Main from '../Main/Main';
-import { getEscrow } from '../../services/backendService';
+import { getEscrow } from '../../services/escrowService';
 
 function UniqueEscrowView() {
   const params = useParams();
   const [ escrow, setEscrow ] = useState({});
   
   useEffect(() => {
-    const localEscrow = getEscrow(params.id, 'placeholder');
-    setEscrow(localEscrow);
+    async function localFetch() {
+      const response = await getEscrow(params.id);
+      if (response.status === 200) {
+        setEscrow(response.escrow);
+      } else {
+        // error
+      }
+    }
+
+    localFetch();
   }, [params.id])
 
   return (
     <Main>
-      <div className='d-flex flex-column mx-2'>
+      <div className='d-flex flex-column mx-4'>
         <h1>{escrow.name}</h1>
         <div className='mt-3'>
           <h2>Descripcion</h2>
