@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { ThreeDotsVertical } from 'react-bootstrap-icons';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { Link } from "react-router-dom";
 
 import Main from '../Main/Main';
 import { getOwnerEscrows, getDeveloperEscrows } from '../../services/escrowService';

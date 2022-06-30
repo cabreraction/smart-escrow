@@ -8,6 +8,7 @@ import UniqueEscrowView from '../UniqueEscrowView/UniqueEscrowView';
 import ServiceValidation from '../EscrowGenerator/Validators/ServiceValidation';
 import FindEscrow from '../FindEscrow/FindEscrow';
 import Profile from '../Profile/Profile';
+import RequireAuth from '../RequireAuth/RequireAuth';
 
 function App() {
   return (
@@ -25,32 +26,60 @@ function App() {
       >
         <Route 
           path='draft'
-          element={ <EscrowGenerator /> } 
+          element={ 
+            <RequireAuth type='employer'>
+              <EscrowGenerator />
+            </RequireAuth>
+         } 
         />
         <Route 
           path='details/:id'
-          element={ <EscrowDetails />}
+          element={ 
+            <RequireAuth type='employer'>
+              <EscrowDetails />
+            </RequireAuth>
+        }
         />
         <Route
           path='validations/:id'
-          element={ <ServiceValidation />}
+          element={ 
+            <RequireAuth type='employer'>
+              <ServiceValidation />
+            </RequireAuth>
+        }
         />
       </Route>
       <Route 
         path='escrows-history' 
-        element={ <EscrowsHistory /> } 
+        element={ 
+          <RequireAuth>
+            <EscrowsHistory /> 
+          </RequireAuth>
+        } 
       />
       <Route
         path='escrow/:id'
-        element={ <UniqueEscrowView />}
+        element={
+          <RequireAuth>
+            <UniqueEscrowView />
+          </RequireAuth> 
+        }
       />
       <Route
         path='find'
-        element={ <FindEscrow /> }
+        element={ 
+          <RequireAuth type='developer'>
+            <FindEscrow /> 
+          </RequireAuth>
+      }
       />
       <Route 
         path='profile' 
-        element={ <Profile /> } 
+        element={ 
+          <RequireAuth>
+            <Profile />
+          </RequireAuth>
+       } 
       />
     </Routes>
   );
