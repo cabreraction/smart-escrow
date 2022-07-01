@@ -10,6 +10,15 @@ function EscrowsHistory() {
   const [ escrows, setEscrows ] = useState([]);
   const [ user, setUser ] = useState(null);
 
+  const downloadCondition = (esc) => {
+    return user.type === 'employer' && esc.status === 'completed';
+  } 
+
+  const editCondition = (esc) => {
+    const editableStates = ['drafted', 'detailed', 'validations added', 'stand by'];
+    return user.type === 'employer' && editableStates.includes(esc.status);
+  }
+
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')));
   }, [])
@@ -62,7 +71,18 @@ function EscrowsHistory() {
                             Ver Detalles
                           </Dropdown.Item>
                           {
-                            user.type === 'employer' && <Dropdown.Item href="#">Editar</Dropdown.Item>
+                            editCondition()  && (
+                              <Dropdown.Item href="#">
+                                Editar
+                              </Dropdown.Item>
+                            )
+                          }
+                          {
+                            downloadCondition() && (
+                              <Dropdown.Item>
+                                Descargar
+                              </Dropdown.Item>
+                            )
                           }
                         </Dropdown.Menu>
                       </Dropdown>

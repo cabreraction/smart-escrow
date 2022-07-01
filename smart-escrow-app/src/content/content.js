@@ -35,3 +35,14 @@ export const escrowValidatorsGenerationGuide = {
     `Dada la naturaleza de los fideicomisos, este no puede cambiar su información una vez haya sido iniciado, si necesitan modificar especificaciones deberán crear un fideicomiso nuevo.`
   ]
 };
+
+export const escrowProductDeliveryGuide = {
+  title: 'Instrucciones de Entrega',
+  summary: `Para entregar el producto por favor asegurate de seguir los siguientes pasos:`,
+  steps: [
+    `El unico formato de entrega permitido es el formato .zip`,
+    `Luego de ser entregada tu aplicacion sera evaluada por nuestro mecanismo de verificacion, si todas las pruebas pasan exitosamente los fondos seran liberados automaticamente 
+      y la aplicacion le sera entregada al solicitante.`,
+    `Si las pruebas no pasan te sera notificado para que hagas los cambios correspondientes.`
+  ]
+};

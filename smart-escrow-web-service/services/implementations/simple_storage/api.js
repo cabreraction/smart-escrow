@@ -14,6 +14,7 @@ export function getUserByEmail(email) {
 }
 
 export function getUserById(id) {
+  const usersData = loadUsersData();
   if (usersData.length === 0) {
     loadUsersData();
   }
@@ -125,7 +126,7 @@ export function updateEscrowValidations(id, validations) {
     const modifiedEscrow = { ...escrow };
     if (modifiedEscrow.id === id) {
       modifiedEscrow.validations = validations;
-      modifiedEscrow.status = 'stand by';
+      modifiedEscrow.status = 'valdations added';
     }
 
     return modifiedEscrow;

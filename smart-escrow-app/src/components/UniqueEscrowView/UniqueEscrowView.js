@@ -1,13 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
+import Modal from 'react-bootstrap/Modal';
 
 import Main from '../Main/Main';
 import { getEscrow } from '../../services/escrowService';
+import ProcessInfo from '../ProcessInfo/ProcessInfo'
+import { escrowProductDeliveryGuide } from '../../content/content';
 
 function UniqueEscrowView() {
   const params = useParams();
   const [ escrow, setEscrow ] = useState({});
+  const [ showModal, setShowModal ] = useState(false);
+  const inputRef = useRef(null);
+  const [ selectedFile, setSelectedFile ] = useState(null);
   
   useEffect(() => {
     async function localFetch() {
@@ -22,8 +28,44 @@ function UniqueEscrowView() {
     localFetch();
   }, [params.id])
 
+  const handleFileChange = evt => {
+    setSelectedFile(evt.target.files[0]);
+    console.log(evt.target.files[0]);
+    setShowModal(true);
+  }
+
+  const submitProductDelivery = () => {
+
+  }
+
+  const cancelProductDelivery = () => {
+    setSelectedFile(null);
+    setShowModal(false);
+  }
+
   return (
     <Main>
+      <Modal 
+        show={showModal} 
+        onHide={null} 
+        backdrop="static"
+        keyboard={false} 
+      >
+        <Modal.Header >
+          <Modal.Title>Entregar Producto</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Esta a punto de entregar la aplicacion acordada en el siguiente archivo comprimido: {selectedFile && selectedFile.name}
+        </Modal.Body>
+        <Modal.Footer>
+          <button className='btn btn-outline-danger' onClick={cancelProductDelivery}>
+            Cancelar
+          </button>
+          <button className='btn btn-outline-primary' onClick={submitProductDelivery}>
+            Aceptar
+          </button>
+        </Modal.Footer>
+      </Modal>
       <div className='d-flex flex-column mx-4'>
         <div>
           <h2 className='mb-3'>Detalles</h2>
@@ -115,8 +157,17 @@ function UniqueEscrowView() {
             </tbody>
           </Table>
         </div>
-        <div className='mt-5 mb-4 d-flex justify-content-center'>
-          <button className='btn btn-outline-primary mx-1'>Entregar Producto</button>
+        <ProcessInfo 
+            { ...escrowProductDeliveryGuide } 
+          />
+        <div className='mb-4 d-flex justify-content-center'>
+          <input hidden={true} type="file" ref={inputRef} onChange={handleFileChange} accept='.zip'/>
+          <button 
+            className='btn btn-outline-primary mx-1'
+            onClick={() => inputRef.current.click()}
+          >
+            Entregar Producto
+          </button>
           <button className='btn btn-outline-danger mx-1'>Finalizar Sin Entrega</button>
         </div>
       </div>
