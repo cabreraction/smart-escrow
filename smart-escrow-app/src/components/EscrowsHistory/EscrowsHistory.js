@@ -71,14 +71,14 @@ function EscrowsHistory() {
                             Ver Detalles
                           </Dropdown.Item>
                           {
-                            editCondition()  && (
+                            editCondition(escrow)  && (
                               <Dropdown.Item href="#">
                                 Editar
                               </Dropdown.Item>
                             )
                           }
                           {
-                            downloadCondition() && (
+                            downloadCondition(escrow) && (
                               <Dropdown.Item>
                                 Descargar
                               </Dropdown.Item>

@@ -54,6 +54,27 @@ function writeUsersDataToFile(data) {
   }
 }
 
+export function updateUserPassword(id, oldPassword, newPassword) {
+  const usersData = loadUsersData();
+  if (usersData.length === 0) {
+    loadUsersData();
+  }
+
+  const flag = false;
+  const updatedArray = usersData.map(user => {
+    const userRef = { ...user };
+    if (userRef.id === id && userRef.password === oldPassword) {
+      userRef.password = newPassword;
+      flag = true;
+    }
+
+    return userRef;
+  });
+
+  writeUsersDataToFile(JSON.stringify(updatedArray));
+  return falg;
+}
+
 // escrow functions 
 function loadEscrowsData() {
   try {

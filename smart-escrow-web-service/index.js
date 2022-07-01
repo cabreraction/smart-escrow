@@ -13,7 +13,10 @@ import {
   getEscrowByCode,
   acceptEscrow 
 } from './controllers/escrow.js';
-import { getUser } from './controllers/user.js';
+import { 
+  getUser,
+  changeUserPassword
+} from './controllers/user.js';
 
 const port = 4000;
 
@@ -29,6 +32,7 @@ app.get('/', (req, res) => {
 app.post('/signup', signup);
 app.post('/login', login);
 app.get('/user/:id', getUser);
+app.put('/user/password', changeUserPassword);
 
 // Controllers - Escrow - POST
 app.post('/escrow', createEscrow);
